@@ -1,0 +1,16 @@
+.idea
+node_modules/
+.vagrant
+.cache
+.env
+*.zip
+yarn-error.log
+lerna-debug.log
+.DS_Store
+scripts/occ.config
+packages/server-extension/index.js
+packages/server-extension/app/bundle.js
+packages/client-extension/ext.json
+packages/client-extension/widget/AdyenPaymentWidget/js/adyen-checkout.min.js
+report*
+coverage/

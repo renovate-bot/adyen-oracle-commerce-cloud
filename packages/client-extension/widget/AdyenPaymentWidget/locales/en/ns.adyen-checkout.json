@@ -1,0 +1,16 @@
+{
+  "resources": {
+    "paymentDetails": "Payment Details",
+    "errorMessage": "There is an error in the payment method.",
+    "payWithCard": "Pay with Card",
+    "payWithBoleto": "Pay with Boleto",
+    "cardType": "Card Type",
+    "installments": "Installments",
+    "noInstallmentsMsg": "Do not use installments",
+    "paymentRefused": "The payment is REFUSED.",
+    "installmentsConfiguration": "Check installment options hash in Adyen Payment Gateway configuration",
+    "failed3dsValidation": "3D-secure validation was unsuccessful",
+    "debitCard": "Debit Card",
+    "creditCard": "Credit Card"
+  }
+}

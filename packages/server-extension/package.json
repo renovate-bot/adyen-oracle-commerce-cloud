@@ -1,0 +1,65 @@
+{
+  "name": "adyen-occ-server",
+  "version": "1.0.0",
+  "main": "./app/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "rollup --config config/config.dev.js",
+    "server": "nodemon app/bundle.js",
+    "lint": "prettier --write 'src/**/*.js'",
+    "watch": "concurrently --kill-others \"npm run dev -- --watch\" \"npm run server\"",
+    "build": "yarn run lint && rollup --config config/config.prod.js",
+    "test": "jest"
+  },
+  "config": {
+    "port": "3000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Adyen/adyen-oracle-commerce-cloud.git"
+  },
+  "keywords": [
+    "adyen",
+    "oracle",
+    "commerce",
+    "cloud",
+    "oracle",
+    "occ",
+    "nodejs"
+  ],
+  "author": "Ricardo Ambrogi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Adyen/adyen-oracle-commerce-cloud/issues"
+  },
+  "homepage": "https://github.com/Adyen/adyen-oracle-commerce-cloud#readme",
+  "dependencies": {
+    "@adyen/api-library": "^2.1.6",
+    "form-data": "^2.5.1",
+    "memory-cache": "^0.2.0",
+    "ua-parser-js": "^0.7.20"
+  },
+  "devDependencies": {
+    "body-parser": "latest",
+    "express": "latest",
+    "husky": "^3.0.2",
+    "jest": "^24.9.0",
+    "nconf": "^0.10.0",
+    "nodemon": "^1.19.1",
+    "winston": "latest"
+  },
+  "description": "",
+  "authenticatedUrls": [
+    {
+      "url": "/ccstorex/custom/adyen/v1/clearCache",
+      "method": [
+        "get"
+      ]
+    }
+  ],
+  "publicUrls": [
+    "/ccstorex/custom/adyen/v1/payments",
+    "/ccstorex/custom/adyen/v1/paymentMethods",
+    "/ccstorex/custom/adyen/v1/originKeys"
+  ]
+}

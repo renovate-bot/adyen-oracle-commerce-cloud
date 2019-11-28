@@ -1,0 +1,99 @@
+<link rel="stylesheet" href="https://checkoutshopper-live.adyen.com/checkoutshopper/sdk/3.2.0/adyen.css" />
+
+<legend data-bind="widgetLocaleText: 'paymentDetails'"></legend>
+
+<div id="adyen-collapse-heading" class="oc-panel panel-1" data-oc-id="panel-1" data-bind="onRender: onRender">
+    <!-- ko if : getStore('boletoEnabled') && getStore('brazilEnabled') -->
+    <div class="collapse-heading">
+      <strong>
+        <span class="collapse-toggle collapsed" data-toggle="collapse" data-target="#adyen-boleto-wrapper">
+          <button data-bind="widgetLocaleText:'payWithBoleto'"></button>
+        </span>
+      </strong>
+    </div>
+    <div id="adyen-boleto-wrapper" class="adyen-wrapper collapse">
+      <!-- ko if : getStore('isSubmitting')() -->
+      <div class="loader-wrapper">
+          <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+          <div style="font-weight: bold; font-size: 16px;">Processing...</div>
+      </div>
+      <!-- /ko -->
+      <div id="adyen-boleto-payment" class="adyen-component"></div>
+    </div>
+    <!-- /ko -->
+    <div class="collapse-heading">
+        <strong> <span class="collapse-toggle collapsed" data-toggle="collapse" data-target="#adyen-card-wrapper"><button
+                data-bind="widgetLocaleText:'payWithCard'"></button></span></strong>
+    </div>
+    <div id="adyen-card-wrapper" class="adyen-wrapper collapse">
+        <!-- ko if : getStore('isSubmitting')() -->
+        <div class="loader-wrapper">
+            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            <div style="font-weight: bold; font-size: 16px;">Processing...</div>
+        </div>
+        <!-- /ko -->
+        <div id="adyen-card-payment" class="adyen-component">
+        <!-- ko if : getStore('isLoaded')() -->
+            <!-- ko if : getStore('brazilEnabled') -->
+            <div class="adyen-checkout__field-wrapper">
+                <div class="adyen-checkout__field">
+                    <label class="adyen-checkout__label">
+                        <span class="adyen-checkout__label__text" data-bind="widgetLocaleText:'cardType'"></span>
+                        <span class="adyen-checkout__input-wrapper">
+                <select
+                        aria-required="true"
+                        type="text"
+                        class="adyen-checkout__input adyen-checkout__input--small adyen-checkout__select"
+                        style="-webkit-appearance: none;
+                        -moz-appearance: none;
+                        appearance: none;
+                        background: url('http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png') white no-repeat 98.5% !important;
+                        background: url('http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png') white no-repeat calc(100% - 10px) !important;
+                    "
+                        id="comboCard"
+                        data-bind="options: getStore('comboCards'),
+                        optionsText: function(item) {
+                            return getStore('translate')(item);
+                        },
+                        value: getStore('selectedComboCard')
+                    ">
+                </select>
+            </span>
+                    </label>
+                </div>
+            </div>
+            <!-- /ko -->
+            <!-- ko if : getStore("installmentsEnabled")() -->
+            <div class="adyen-checkout__field-wrapper">
+                <div class="adyen-checkout__field">
+                    <label class="adyen-checkout__label">
+                        <span class="adyen-checkout__label__text" data-bind="widgetLocaleText:'installments'"></span>
+                        <span class="adyen-checkout__input-wrapper">
+                <select
+                        aria-required="true"
+                        type="text"
+                        id="installments"
+                        class="adyen-checkout__input adyen-checkout__input--small adyen-checkout__select"
+                        style="-webkit-appearance: none;
+                        -moz-appearance: none;
+                        appearance: none;
+                        background: url('http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png') white no-repeat 98.5% !important;
+                        background: url('http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png') white no-repeat calc(100% - 10px) !important;
+                    "
+                        data-bind="options: getStore('installments'),
+                        optionsText: function(item) {
+                            return item.numberOfInstallments + 'x';
+                        },
+                        value: getStore('selectedInstallment'),
+                        optionsCaption: getStore('noInstallmentsMsg')
+                    ">
+                </select>
+            </span>
+                    </label>
+                </div>
+            </div>
+            <!-- /ko -->
+         <!-- /ko -->
+        </div>
+    </div>
+</div>

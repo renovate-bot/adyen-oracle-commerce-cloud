@@ -1,0 +1,15 @@
+{
+  "name": "Adyen",
+  "javascript": "adyen-checkout.min",
+  "i18nresources": "adyen-checkout",
+  "pageTypes": ["checkout", "payment"],
+  "imports": [
+    "payment",
+    "order",
+    "paymentauthorization",
+    "site"
+  ],
+  "jsEditable": false,
+  "version": 1,
+  "global": false
+}

@@ -1,0 +1,7 @@
+{
+  "provider": "Adyen",
+  "paymentMethodTypes": ["generic"],
+  "transactionTypes": {
+    "generic": ["initiate", "retrieve", "authorization", "void", "refund"]
+  }
+}

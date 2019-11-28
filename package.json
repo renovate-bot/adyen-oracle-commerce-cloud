@@ -1,0 +1,33 @@
+{
+  "name": "root",
+  "private": true,
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-transform-arrow-functions": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/runtime": "^7.7.2",
+    "babel-preset-es2015-rollup": "^3.0.0",
+    "chokidar": "^3.0.2",
+    "concurrently": "^4.1.1",
+    "lerna": "^3.16.4",
+    "nock": "^11.7.0",
+    "prettier": "1.18.2",
+    "rollup": "^1.19.4",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-cleanup": "^3.1.1",
+    "jest": "^24.9.0",
+    "node-fetch": "^2.6.0"
+  },
+  "scripts": {
+    "build": "lerna run build",
+    "lint": "lerna run lint",
+    "bootstrap": "lerna bootstrap",
+    "bootstrap:production": "lerna bootstrap -- --production",
+    "watch": "lerna run --parallel watch",
+    "deploy:client": "./scripts/client/zip-and-deploy.sh",
+    "deploy:server": "./scripts/server/zip-and-deploy.sh",
+    "test": "jest"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "resources": {
+    "paymentDetails": "Detalhes do Pagamento",
+    "errorMessage": "Houve um erro com o metodo de pagamento.",
+    "payWithCard": "Pague com cartao",
+    "payWithBoleto": "Pague com Boleto",
+    "cardType": "Tipo de Cartao",
+    "installments": "Parcelamento",
+    "noInstallmentsMsg": "Nao usar parcelamento",
+    "paymentRefused": "O pagamento foi RECUSADO.",
+    "installmentsConfiguration": "Codigo de parcelamento invalido. Cheque as configuracoes do Gateway Adyen de Pagamento.",
+    "failed3dsValidation": "Houve um erro na validacao 3D-secure",
+    "debitCard": "Cartao de Debito",
+    "creditCard": "Cartao de Credito"
+  }
+}
