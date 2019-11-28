@@ -8,20 +8,6 @@ const generateTemplate = (widget, cb) => {
     const node = document.createElement('div')
     node.innerHTML = template.toString();
 
-    ko.templateSources.stringTemplate = function (template, templates) {
-        this.templateName = template;
-        this.templates = templates;
-    }
-
-    function createStringTemplateEngine(templateEngine, templates) {
-        templateEngine.makeTemplateSource = function (template) {
-            return new ko.templateSources.stringTemplate(template, templates);
-        }
-        return templateEngine;
-    }
-
-    ko.setTemplateEngine(createStringTemplateEngine(new ko.nativeTemplateEngine(), viewModel.templates));
-
     viewModel.onLoad(widget)
     cb && cb(viewModel)
     ko.applyBindings(viewModel, node);
