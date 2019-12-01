@@ -6,7 +6,6 @@ import {eventEmitter} from "../utils";
 describe('Template', () => {
     let widget
     let tmplWidget;
-
     beforeEach(() => {
         tmplWidget = mockTemplate('Tmpl_Widget')
         widget = new Widget()

@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Adyen/adyen-oracle-commerce-cloud.svg?branch=master)](https://travis-ci.org/Adyen/adyen-oracle-commerce-cloud)
+[![Coverage Status](https://coveralls.io/repos/github/Adyen/adyen-oracle-commerce-cloud/badge.svg)](https://coveralls.io/github/Adyen/adyen-oracle-commerce-cloud)
 # Adyen Oracle Commerce Cloud
 ## Requirements
 Node.js (min. v8.1.1) with package manager (NPM or Yarn)
@@ -12,9 +14,9 @@ EXTENSION_NAME=ANY_NAME           # EXTENSION_NAME="Adyen Plugin"
 ## Installation
 > _You can find the scripts to zip and deploy the client/server inside the `scripts` folder_
 ### Server Extension
-Run `$ npm run deploy:server`  
+Run `$ npm run deploy:server`  or `$ yarn run deploy:server`
 ### Client Extension
-Run `$ npm run deploy:client`
+Run `$ npm run deploy:client` or `$ yarn run deploy:client`
 
 
 ## Client Extension
