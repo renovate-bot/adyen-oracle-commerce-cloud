@@ -12,11 +12,13 @@
     "chokidar": "^3.0.2",
     "concurrently": "^4.1.1",
     "coveralls": "^3.0.9",
+    "husky": ">=1",
     "jest": "^24.9.0",
     "lerna": "^3.19.0",
+    "lint-staged": ">=8",
     "nock": "^11.7.0",
     "node-fetch": "^2.6.0",
-    "prettier": "1.18.2",
+    "prettier": "1.19.1",
     "rollup": "^1.19.4",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-cleanup": "^3.1.1"
@@ -30,6 +32,19 @@
     "deploy:client": "./scripts/client/zip-and-deploy.sh",
     "deploy:server": "./scripts/server/zip-and-deploy.sh",
     "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --collectCoverage",
     "postinstall": "lerna bootstrap"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,css,json,md}": [
+      "yarn run lint",
+      "git add"
+    ]
   }
 }
