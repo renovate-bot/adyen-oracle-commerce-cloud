@@ -9,6 +9,7 @@ describe('Create Error', function() {
     const preserveUrl = false
     const redirectLink = 'mocked_link'
     let widget
+
     beforeEach(() => {
         widget = new Widget()
         viewModel.onLoad(widget)

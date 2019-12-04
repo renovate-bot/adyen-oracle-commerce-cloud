@@ -1,0 +1,369 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Local should render 1`] = `
+Object {
+  Symbol(dom): <body>
+    <link
+      href="https://checkoutshopper-live.adyen.com/checkoutshopper/sdk/3.3.0/adyen.css"
+      rel="stylesheet"
+    />
+    <legend />
+    <div
+      class="oc-panel panel-1"
+      data-oc-id="panel-1"
+      id="adyen-collapse-heading"
+    >
+      <div
+        class="collapse-heading"
+      >
+        <strong>
+           
+          <span
+            class="collapse-toggle collapsed"
+            data-target="#adyen-generic-wrapper"
+            data-toggle="collapse"
+          >
+            <button />
+          </span>
+        </strong>
+      </div>
+      <div
+        class="adyen-wrapper collapse"
+        id="adyen-generic-wrapper"
+      >
+        <div
+          class="loader-wrapper hide"
+        >
+          <div
+            class="lds-ring"
+          >
+            <div />
+            <div />
+            <div />
+            <div />
+          </div>
+          <div
+            style="font-weight: bold; font-size: 16px;"
+          >
+            Processing...
+          </div>
+        </div>
+        <div
+          class="adyen-component"
+          id="adyen-card-payment"
+        />
+      </div>
+      <div
+        class="collapse-heading"
+      >
+         
+        <strong>
+          
+        
+          <span
+            class="collapse-toggle collapsed"
+            data-target="#adyen-dotpay-wrapper"
+            data-toggle="collapse"
+          >
+            
+          
+            <button>
+              Local Polish Payment Methods
+            </button>
+            
+        
+          </span>
+          
+      
+        </strong>
+      </div>
+      <div
+        class="adyen-wrapper collapse"
+        id="adyen-dotpay-wrapper"
+      >
+        
+        
+        <div
+          class="loader-wrapper hide"
+        >
+          
+            
+          <div
+            class="lds-ring"
+          >
+            <div />
+            <div />
+            <div />
+            <div />
+          </div>
+          
+            
+          <div
+            style="font-weight: bold; font-size: 16px;"
+          >
+            Processing...
+          </div>
+          
+        
+        </div>
+        
+        
+        <div
+          class="adyen-component"
+          id="adyen-dotpay-payment"
+        />
+        
+    
+      </div>
+      <div
+        class="collapse-heading"
+      >
+         
+        <strong>
+          
+        
+          <span
+            class="collapse-toggle collapsed"
+            data-target="#adyen-entercash-wrapper"
+            data-toggle="collapse"
+          >
+            
+          
+            <button>
+              Bank Payment
+            </button>
+            
+        
+          </span>
+          
+      
+        </strong>
+      </div>
+      <div
+        class="adyen-wrapper collapse"
+        id="adyen-entercash-wrapper"
+      >
+        
+        
+        <div
+          class="loader-wrapper hide"
+        >
+          
+            
+          <div
+            class="lds-ring"
+          >
+            <div />
+            <div />
+            <div />
+            <div />
+          </div>
+          
+            
+          <div
+            style="font-weight: bold; font-size: 16px;"
+          >
+            Processing...
+          </div>
+          
+        
+        </div>
+        
+        
+        <div
+          class="adyen-component"
+          id="adyen-entercash-payment"
+        />
+        
+    
+      </div>
+      <div
+        class="collapse-heading"
+      >
+         
+        <strong>
+          
+        
+          <span
+            class="collapse-toggle collapsed"
+            data-target="#adyen-eps-wrapper"
+            data-toggle="collapse"
+          >
+            
+          
+            <button>
+              EPS
+            </button>
+            
+        
+          </span>
+          
+      
+        </strong>
+      </div>
+      <div
+        class="adyen-wrapper collapse"
+        id="adyen-eps-wrapper"
+      >
+        
+        
+        <div
+          class="loader-wrapper hide"
+        >
+          
+            
+          <div
+            class="lds-ring"
+          >
+            <div />
+            <div />
+            <div />
+            <div />
+          </div>
+          
+            
+          <div
+            style="font-weight: bold; font-size: 16px;"
+          >
+            Processing...
+          </div>
+          
+        
+        </div>
+        
+        
+        <div
+          class="adyen-component"
+          id="adyen-eps-payment"
+        />
+        
+    
+      </div>
+      <div
+        class="collapse-heading"
+      >
+         
+        <strong>
+          
+        
+          <span
+            class="collapse-toggle collapsed"
+            data-target="#adyen-ideal-wrapper"
+            data-toggle="collapse"
+          >
+            
+          
+            <button>
+              iDEAL
+            </button>
+            
+        
+          </span>
+          
+      
+        </strong>
+      </div>
+      <div
+        class="adyen-wrapper collapse"
+        id="adyen-ideal-wrapper"
+      >
+        
+        
+        <div
+          class="loader-wrapper hide"
+        >
+          
+            
+          <div
+            class="lds-ring"
+          >
+            <div />
+            <div />
+            <div />
+            <div />
+          </div>
+          
+            
+          <div
+            style="font-weight: bold; font-size: 16px;"
+          >
+            Processing...
+          </div>
+          
+        
+        </div>
+        
+        
+        <div
+          class="adyen-component"
+          id="adyen-ideal-payment"
+        />
+        
+    
+      </div>
+      <div
+        class="collapse-heading"
+      >
+         
+        <strong>
+          
+        
+          <span
+            class="collapse-toggle collapsed"
+            data-target="#adyen-openbanking_UK-wrapper"
+            data-toggle="collapse"
+          >
+            
+          
+            <button>
+              Online banking
+            </button>
+            
+        
+          </span>
+          
+      
+        </strong>
+      </div>
+      <div
+        class="adyen-wrapper collapse"
+        id="adyen-openbanking_UK-wrapper"
+      >
+        
+        
+        <div
+          class="loader-wrapper hide"
+        >
+          
+            
+          <div
+            class="lds-ring"
+          >
+            <div />
+            <div />
+            <div />
+            <div />
+          </div>
+          
+            
+          <div
+            style="font-weight: bold; font-size: 16px;"
+          >
+            Processing...
+          </div>
+          
+        
+        </div>
+        
+        
+        <div
+          class="adyen-component"
+          id="adyen-openbanking_UK-payment"
+        />
+        
+    
+      </div>
+    </div>
+  </body>,
+}
+`;

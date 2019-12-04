@@ -8,6 +8,8 @@ import * as constants from './constants'
 import { presentToShopper, setBoletoConfig } from './components'
 
 class ViewModel {
+    store = store
+
     setGatewaySettings = ({
         installmentsOptionsId,
         environment,
@@ -68,21 +70,15 @@ class ViewModel {
     }
 
     onLoad = widget => {
-        Object.assign(this, widget)
         store.init(widget)
+        Object.assign(this, widget, { store })
 
         this.setSiteSettings()
-
         this.subscribeToTopics()
     }
 
     onRender = () => {
         eventEmitter.component.emit(constants.render)
-    }
-
-    getStore = key => {
-        const hasKey = store.has(key)
-        return hasKey ? store.get(key) : undefined
     }
 
     reset = () => {
@@ -133,4 +129,5 @@ class ViewModel {
     }
 }
 
-export default new ViewModel()
+const vm = new ViewModel()
+export default vm

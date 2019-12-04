@@ -21,36 +21,9 @@ describe('Order', () => {
     let widget
     let order
     beforeEach(() => {
+        jest.clearAllMocks()
         widget = new Widget()
         order = new Order()
-    })
-
-    it('should create order', async done => {
-        const spy = jest.spyOn(order, 'createOrder')
-        viewModel.onLoad(widget)
-
-        const paymentState = ccConstants.PAYMENT_GROUP_STATE_AUTHORIZED
-        const payments = [{ paymentState }]
-        const scope = nock('http://localhost')
-            .post('/order')
-            .times(2)
-            .reply(200, { payments, id: 'mocked_id', uuid: 'mocked_uuid' })
-
-        const data = '{ "foo": "bar" }'
-        const resultCode = 'Authorised'
-        const customPayments = [
-            { customPaymentProperties: { data, resultCode } },
-        ]
-        const mockedOrderEvent = { order: { payments: customPayments } }
-        order.initialOrderCreated(mockedOrderEvent)
-
-        expect(spy).toHaveBeenCalled()
-        expect(createFromAction).toHaveBeenCalledTimes(0)
-
-        eventEmitter.on(pubsub.topicNames.ORDER_SUBMISSION_SUCCESS, () => {
-            expect(scope.isDone()).toBeTruthy()
-            done()
-        })
     })
 
     it('should fail to create order', async done => {
@@ -68,9 +41,8 @@ describe('Order', () => {
         const mockedOrderEvent = { order: { payments: customPayments } }
         order.initialOrderCreated(mockedOrderEvent)
 
-        expect(scope.isDone()).toBeTruthy()
-
         eventEmitter.on(pubsub.topicNames.ORDER_SUBMISSION_FAIL, () => {
+            expect(scope.isDone()).toBeTruthy()
             done()
         })
     })
@@ -82,6 +54,7 @@ describe('Order', () => {
         const payments = [{ paymentState }]
         const scope = nock('http://localhost')
             .post('/order')
+            .once()
             .reply(200, { payments, id: 'mocked_id', uuid: 'mocked_uuid' })
 
         const data = '{ "foo": "bar" }'
@@ -92,9 +65,9 @@ describe('Order', () => {
         const mockedOrderEvent = { order: { payments: customPayments } }
         order.initialOrderCreated(mockedOrderEvent)
 
-        expect(scope.isDone()).toBeTruthy()
 
         eventEmitter.on(pubsub.topicNames.ORDER_SUBMISSION_FAIL, () => {
+            expect(scope.isDone()).toBeTruthy()
             done()
         })
     })
@@ -120,6 +93,34 @@ describe('Order', () => {
         }
         expect(createFromAction).toHaveBeenNthCalledWith(1, payload)
         expect(order.createOrder).toHaveBeenCalledTimes(0)
+    })
+
+    it('should create order', async done => {
+        const spy = jest.spyOn(order, 'createOrder')
+        viewModel.onLoad(widget)
+
+        const paymentState = ccConstants.PAYMENT_GROUP_STATE_AUTHORIZED
+        const payments = [{ paymentState }]
+        const scope = nock('http://localhost')
+            .post('/order')
+            .twice()
+            .reply(200, { payments, id: 'mocked_id', uuid: 'mocked_uuid' })
+
+        const data = '{ "foo": "bar" }'
+        const resultCode = 'Authorised'
+        const customPayments = [
+            { customPaymentProperties: { data, resultCode } },
+        ]
+        const mockedOrderEvent = { order: { payments: customPayments } }
+        order.initialOrderCreated(mockedOrderEvent)
+        expect(createFromAction).toHaveBeenCalledTimes(0)
+
+        expect(spy).toHaveBeenCalled()
+
+        eventEmitter.on(pubsub.topicNames.ORDER_SUBMISSION_SUCCESS, () => {
+            expect(scope.isDone()).toBeTruthy()
+            done()
+        })
     })
 
     it('should correctly parse url parameters', () => {

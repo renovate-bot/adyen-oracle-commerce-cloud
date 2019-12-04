@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="https://checkoutshopper-live.adyen.com/checkoutshopper/sdk/3.2.0/adyen.css" />
+<link rel="stylesheet" href="https://checkoutshopper-live.adyen.com/checkoutshopper/sdk/3.3.0/adyen.css" />
 
 <legend data-bind="widgetLocaleText: 'paymentDetails'"></legend>
 
@@ -13,8 +13,8 @@
             <div style="font-weight: bold; font-size: 16px;">Processing...</div>
         </div>
         <div id="adyen-card-payment" class="adyen-component">
-        <!-- ko if : getStore('isLoaded')() -->
-            <!-- ko if : getStore('brazilEnabled') -->
+        <!-- ko if : store.isLoaded() -->
+            <!-- ko if : store.brazilEnabled -->
             <div class="adyen-checkout__field-wrapper">
                 <div class="adyen-checkout__field">
                     <label class="adyen-checkout__label">
@@ -31,11 +31,11 @@
                         background: url('http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png') white no-repeat calc(100% - 10px) !important;
                     "
                         id="comboCard"
-                        data-bind="options: getStore('comboCards'),
+                        data-bind="options: store.comboCards,
                         optionsText: function(item) {
-                            return getStore('translate')(item);
+                            return store.translate(item);
                         },
-                        value: getStore('selectedComboCard')
+                        value: store.selectedComboCard
                     ">
                 </select>
             </span>
@@ -43,7 +43,7 @@
                 </div>
             </div>
             <!-- /ko -->
-            <!-- ko if : getStore("installmentsEnabled")() -->
+            <!-- ko if : store.installmentsEnabled() -->
             <div class="adyen-checkout__field-wrapper">
                 <div class="adyen-checkout__field">
                     <label class="adyen-checkout__label">
@@ -60,12 +60,12 @@
                         background: url('http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png') white no-repeat 98.5% !important;
                         background: url('http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png') white no-repeat calc(100% - 10px) !important;
                     "
-                        data-bind="options: getStore('installments'),
+                        data-bind="options: store.installments,
                         optionsText: function(item) {
                             return item.numberOfInstallments + 'x';
                         },
-                        value: getStore('selectedInstallment'),
-                        optionsCaption: getStore('noInstallmentsMsg')
+                        value: store.selectedInstallment,
+                        optionsCaption: store.noInstallmentsMsg
                     ">
                 </select>
             </span>
@@ -77,7 +77,7 @@
         </div>
     </div>
 
-    <!-- ko if : getStore('boletoEnabled') && getStore('brazilEnabled') -->
+    <!-- ko if : store.boletoEnabled && store.brazilEnabled -->
     <div class="collapse-heading">
         <strong>
         <span class="collapse-toggle collapsed" data-toggle="collapse" data-target="#adyen-invoice-wrapper">

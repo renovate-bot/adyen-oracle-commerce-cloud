@@ -5,6 +5,8 @@ jest.mock('../utils/checkout')
 import { presentToShopper } from '../components/boleto'
 import { Checkout, createFromAction } from '../utils'
 import { createBoletoCheckout } from '../components'
+import * as constants from '../constants'
+import generateTemplate from '../utils/tests/koTemplate'
 
 describe('Boleto', () => {
     let widget
@@ -29,5 +31,18 @@ describe('Boleto', () => {
 
         createBoletoCheckout()
         expect(Checkout.prototype.createCheckout).toHaveBeenCalled()
+    })
+
+    it('should display boleto component', function() {
+        const { countries, paymentMethodTypes } = constants
+        const { brazil } = countries
+        widget.setCurrencyCode(brazil.currency)
+        widget.setLocale(brazil.locale)
+        widget.setGatewaySettings('paymentMethodTypes', [
+            paymentMethodTypes.invoice,
+        ])
+
+        const template = generateTemplate(widget)
+        expect(template).toMatchSnapshot()
     })
 })

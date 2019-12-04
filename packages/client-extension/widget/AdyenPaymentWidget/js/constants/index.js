@@ -18,7 +18,7 @@ export const countries = {
 }
 export const brazilEnabled = 'brazilEnabled'
 export const comboCards = { debit: 'debitCard', credit: 'creditCard' }
-export const bins = { electron: 'electron' }
+export const bins = { electron: 'electron', maestro: 'maestro' }
 export const storage = { paymentData: 'AdyenPaymentData', order: 'AdyenOrder' }
 export const noInstallmentsMsg = 'noInstallmentsMsg'
 

@@ -34,13 +34,16 @@ export default {
             preferBuiltins: false,
         }),
         commonjs(),
-        cleanup(),
+        cleanup({ sourceMap: true, comments: 'none' }),
     ],
     output: {
         file: path.join(inputPath, `${widgetFilename}.min.js`),
         format: 'amd',
         name: 'AdyenWidget',
+        sourcemap: true,
+        globals: { jquery: '$', knockout: 'ko' },
     },
+    external: ['jquery', 'knockout'],
     watch: {
         chokidar: { usePolling: true },
     },

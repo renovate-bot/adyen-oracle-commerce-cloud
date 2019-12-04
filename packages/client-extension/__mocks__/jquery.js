@@ -22,6 +22,7 @@ const methods = {
             const body = await res.json()
             process.nextTick(() => success(body))
         } catch (e) {
+            console.log(e)
             throw new Error(e)
         }
     },
@@ -35,6 +36,7 @@ const methods = {
             cb()
             await fetch(url)
         } catch (e) {
+            console.log(e)
             throw new Error(e)
         }
     },

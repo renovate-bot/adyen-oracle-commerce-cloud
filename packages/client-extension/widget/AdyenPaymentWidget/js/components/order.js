@@ -45,6 +45,7 @@ class Order {
         }
 
         const completeOrder = ({ id, uuid }) => {
+            eventEmitter.store.emit(constants.isDone, true)
             const publishData = { message: 'success', id, uuid }
             $.Topic(pubsub.topicNames.ORDER_COMPLETED).publish(publishData)
             $.Topic(pubsub.topicNames.ORDER_SUBMISSION_SUCCESS).publish([publishData])
@@ -71,7 +72,6 @@ class Order {
         const storedOrder = JSON.parse(this.instance.getItem(constants.storage.order))
         storedOrder.payments = [paymentData]
 
-        eventEmitter.store.emit(constants.isDone, true)
         this.createOrder(storedOrder)
     }
 

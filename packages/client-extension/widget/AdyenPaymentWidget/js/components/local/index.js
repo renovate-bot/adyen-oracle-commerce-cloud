@@ -42,6 +42,7 @@ const createLocalComponent = ({ type, name }) => {
     const adyenNode = document.getElementById('adyen-collapse-heading')
     adyenNode.appendChild(headingNode)
     adyenNode.appendChild(component)
+    return adyenNode
 }
 
 const createLocalCheckout = (acc, localPaymentMethod) => {

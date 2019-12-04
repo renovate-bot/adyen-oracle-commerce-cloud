@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Template should render 1`] = `
+exports[`Boleto should display boleto component 1`] = `
 Object {
   Symbol(dom): <body>
     <link
@@ -51,6 +51,45 @@ Object {
         <div
           class="adyen-component"
           id="adyen-card-payment"
+        />
+      </div>
+      <div
+        class="collapse-heading"
+      >
+        <strong>
+          <span
+            class="collapse-toggle collapsed"
+            data-target="#adyen-invoice-wrapper"
+            data-toggle="collapse"
+          >
+            <button />
+          </span>
+        </strong>
+      </div>
+      <div
+        class="adyen-wrapper collapse"
+        id="adyen-invoice-wrapper"
+      >
+        <div
+          class="loader-wrapper hide"
+        >
+          <div
+            class="lds-ring"
+          >
+            <div />
+            <div />
+            <div />
+            <div />
+          </div>
+          <div
+            style="font-weight: bold; font-size: 16px;"
+          >
+            Processing...
+          </div>
+        </div>
+        <div
+          class="adyen-component"
+          id="adyen-boleto-payment"
         />
       </div>
     </div>

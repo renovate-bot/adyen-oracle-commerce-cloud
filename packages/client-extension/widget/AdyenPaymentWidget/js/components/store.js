@@ -8,6 +8,48 @@ class Store {
         this.startEventListeners()
     }
 
+    brazilEnabled = false
+
+    storedPaymentType = ko.observable('')
+    environment = undefined
+    pageParams = undefined
+
+    // Component
+    component = new Component()
+    checkout = undefined
+    originKey = ''
+    isValid = false
+    selectedBrand = undefined
+    creditCard = comboCards.credit
+    debitCard = comboCards.debit
+    comboCards = ko.observable([comboCards.credit, comboCards.debit])
+    comboCardOptions = {}
+    selectedComboCard = ko.observable(comboCards.credit)
+    isPaymentStored = ko.observable(false)
+    paymentMethodsResponse = undefined
+    paymentDetails = undefined
+    isLoaded = ko.observable(false)
+    installments = ko.observable([])
+    selectedInstallment = ko.observable({})
+    installmentsAllowedCountries = [countries.mexico.locale, countries.brazil.locale]
+    installmentsOptions = []
+
+    // Payment
+    paymentComponent = new Payment()
+    genericPayment = { type: 'generic' }
+
+    // Order
+    orderComponent = new Order()
+    isDone = ko.observable(false)
+
+    // Boleto
+    boletoEnabled = false
+    boletoDeliveryDate = ''
+    boletoShopperStatement = ''
+
+    // Local
+    checkoutLocal = ko.observable([])
+
     get installmentsEnabled() {
         const hasInstallments = !!this.installments().length
         const cardIsCredit = this.selectedComboCard() === comboCards.credit
@@ -39,48 +81,7 @@ class Store {
         this.ajax = ajax(viewModel.isPreview())
         this.translate = viewModel.translate
         this.locale = viewModel.locale()
-        this.brazilEnabled = false
-
         this.noInstallmentsMsg = viewModel.translate(noInstallmentsMsg)
-        this.storedPaymentType = ko.observable('')
-        this.environment = undefined
-        this.pageParams = undefined
-
-        // Component
-        this.component = new Component()
-        this.checkout = undefined
-        this.originKey = ''
-        this.isValid = false
-        this.selectedBrand = undefined
-        this.creditCard = comboCards.credit
-        this.debitCard = comboCards.debit
-        this.comboCards = ko.observable([comboCards.credit, comboCards.debit])
-        this.comboCardOptions = {}
-        this.selectedComboCard = ko.observable(comboCards.credit)
-        this.isPaymentStored = ko.observable(false)
-        this.paymentMethodsResponse = undefined
-        this.paymentDetails = undefined
-        this.isLoaded = ko.observable(false)
-        this.installments = ko.observable([])
-        this.selectedInstallment = ko.observable({})
-        this.installmentsAllowedCountries = [countries.mexico.locale, countries.brazil.locale]
-        this.installmentsOptions = []
-
-        // Payment
-        this.paymentComponent = new Payment()
-        this.genericPayment = { type: 'generic' }
-
-        // Order
-        this.orderComponent = new Order()
-        this.isDone = ko.observable(false)
-
-        // Boleto
-        this.boletoEnabled = false
-        this.boletoDeliveryDate = ''
-        this.boletoShopperStatement = ''
-
-        // Local
-        this.checkoutLocal = ko.observable([])
     }
 }
 
