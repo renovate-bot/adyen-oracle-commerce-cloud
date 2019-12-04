@@ -3,35 +3,15 @@
 <legend data-bind="widgetLocaleText: 'paymentDetails'"></legend>
 
 <div id="adyen-collapse-heading" class="oc-panel panel-1" data-oc-id="panel-1" data-bind="onRender: onRender">
-    <!-- ko if : getStore('boletoEnabled') && getStore('brazilEnabled') -->
     <div class="collapse-heading">
-      <strong>
-        <span class="collapse-toggle collapsed" data-toggle="collapse" data-target="#adyen-boleto-wrapper">
-          <button data-bind="widgetLocaleText:'payWithBoleto'"></button>
-        </span>
-      </strong>
-    </div>
-    <div id="adyen-boleto-wrapper" class="adyen-wrapper collapse">
-      <!-- ko if : getStore('isSubmitting')() -->
-      <div class="loader-wrapper">
-          <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-          <div style="font-weight: bold; font-size: 16px;">Processing...</div>
-      </div>
-      <!-- /ko -->
-      <div id="adyen-boleto-payment" class="adyen-component"></div>
-    </div>
-    <!-- /ko -->
-    <div class="collapse-heading">
-        <strong> <span class="collapse-toggle collapsed" data-toggle="collapse" data-target="#adyen-card-wrapper"><button
+        <strong> <span class="collapse-toggle collapsed" data-toggle="collapse" data-target="#adyen-generic-wrapper"><button
                 data-bind="widgetLocaleText:'payWithCard'"></button></span></strong>
     </div>
-    <div id="adyen-card-wrapper" class="adyen-wrapper collapse">
-        <!-- ko if : getStore('isSubmitting')() -->
-        <div class="loader-wrapper">
+    <div id="adyen-generic-wrapper" class="adyen-wrapper collapse">
+        <div class="loader-wrapper hide">
             <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
             <div style="font-weight: bold; font-size: 16px;">Processing...</div>
         </div>
-        <!-- /ko -->
         <div id="adyen-card-payment" class="adyen-component">
         <!-- ko if : getStore('isLoaded')() -->
             <!-- ko if : getStore('brazilEnabled') -->
@@ -96,4 +76,26 @@
          <!-- /ko -->
         </div>
     </div>
+
+    <!-- ko if : getStore('boletoEnabled') && getStore('brazilEnabled') -->
+    <div class="collapse-heading">
+        <strong>
+        <span class="collapse-toggle collapsed" data-toggle="collapse" data-target="#adyen-invoice-wrapper">
+          <button data-bind="widgetLocaleText:'payWithBoleto'"></button>
+        </span>
+        </strong>
+    </div>
+    <div id="adyen-invoice-wrapper" class="adyen-wrapper collapse">
+        <div class="loader-wrapper hide">
+            <div class="lds-ring">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div style="font-weight: bold; font-size: 16px;">Processing...</div>
+        </div>
+        <div id="adyen-boleto-payment" class="adyen-component"></div>
+    </div>
+    <!-- /ko -->
 </div>

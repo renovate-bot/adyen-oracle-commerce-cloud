@@ -11,17 +11,11 @@ class Store {
     get installmentsEnabled() {
         const hasInstallments = !!this.installments().length
         const cardIsCredit = this.selectedComboCard() === comboCards.credit
-        return ko.observable(
-            this.isAllowedCountryForInstallments &&
-                hasInstallments &&
-                cardIsCredit
-        )
+        return ko.observable(this.isAllowedCountryForInstallments && hasInstallments && cardIsCredit)
     }
 
     get isAllowedCountryForInstallments() {
-        return this.installmentsAllowedCountries.includes(
-            this.locale.toLowerCase()
-        )
+        return this.installmentsAllowedCountries.includes(this.locale.toLowerCase())
     }
 
     startEventListeners = () => {
@@ -60,25 +54,21 @@ class Store {
         this.selectedBrand = undefined
         this.creditCard = comboCards.credit
         this.debitCard = comboCards.debit
-        this.comboCards = ko.observable([this.creditCard, this.debitCard])
+        this.comboCards = ko.observable([comboCards.credit, comboCards.debit])
         this.comboCardOptions = {}
-        this.selectedComboCard = ko.observable(this.creditCard)
+        this.selectedComboCard = ko.observable(comboCards.credit)
         this.isPaymentStored = ko.observable(false)
         this.paymentMethodsResponse = undefined
         this.paymentDetails = undefined
         this.isLoaded = ko.observable(false)
         this.installments = ko.observable([])
         this.selectedInstallment = ko.observable({})
-        this.installmentsAllowedCountries = [
-            countries.mexico.locale,
-            countries.brazil.locale,
-        ]
+        this.installmentsAllowedCountries = [countries.mexico.locale, countries.brazil.locale]
         this.installmentsOptions = []
 
         // Payment
         this.paymentComponent = new Payment()
         this.genericPayment = { type: 'generic' }
-        this.isSubmitting = ko.observable(false)
 
         // Order
         this.orderComponent = new Order()
@@ -88,6 +78,9 @@ class Store {
         this.boletoEnabled = false
         this.boletoDeliveryDate = ''
         this.boletoShopperStatement = ''
+
+        // Local
+        this.checkoutLocal = ko.observable([])
     }
 }
 

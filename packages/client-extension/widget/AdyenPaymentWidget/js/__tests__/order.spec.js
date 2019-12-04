@@ -2,7 +2,6 @@ import nock from 'nock'
 import Widget from '../../../../__mocks__/widget'
 import pubsub from '../../../../__mocks__/pubsub'
 import * as ccConstants from '../../../../__mocks__/ccConstants'
-import $ from '../../../../__mocks__/jquery'
 import viewModel from '../adyen-checkout'
 import { Order } from '../components'
 import { eventEmitter } from '../utils'
@@ -34,6 +33,7 @@ describe('Order', () => {
         const payments = [{ paymentState }]
         const scope = nock('http://localhost')
             .post('/order')
+            .times(2)
             .reply(200, { payments, id: 'mocked_id', uuid: 'mocked_uuid' })
 
         const data = '{ "foo": "bar" }'
@@ -46,9 +46,9 @@ describe('Order', () => {
 
         expect(spy).toHaveBeenCalled()
         expect(createFromAction).toHaveBeenCalledTimes(0)
-        expect(scope.isDone()).toBeTruthy()
 
         eventEmitter.on(pubsub.topicNames.ORDER_SUBMISSION_SUCCESS, () => {
+            expect(scope.isDone()).toBeTruthy()
             done()
         })
     })

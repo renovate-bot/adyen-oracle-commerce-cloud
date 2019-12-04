@@ -8,8 +8,9 @@
     "jasmine": true
   },
   "rules": {
-    "max-len": ["error", {"code": 140}],
+    "max-len": ["error", {"code": 120}],
     "indent": ["error", 4],
+    "complexity": ["error", 2],
     "prettier/prettier": "error"
   },
   "parserOptions": {

@@ -1,44 +1,28 @@
 import * as constants from '../../constants'
-import {
-    addDays,
-    Checkout,
-    createPresentToShopperModal,
-    eventEmitter,
-    createFromAction,
-} from '../../utils'
+import { addDays, Checkout, createPresentToShopperModal, eventEmitter, createFromAction } from '../../utils'
 import { store } from '../index'
 
-export const setBoletoConfig = ({
-    paymentMethodTypes,
-    boletoDeliveryDate,
-    boletoShopperStatement,
-}) => {
-    const hasBoleto = paymentMethodTypes.includes(
-        constants.paymentMethodTypes.invoice
-    )
+const setDeliveryDate = boletoDeliveryDate => {
+    boletoDeliveryDate && eventEmitter.store.emit(constants.boleto.deliveryDate, boletoDeliveryDate)
+}
+
+const setShopperStatement = boletoShopperStatement => {
+    boletoShopperStatement && eventEmitter.store.emit(constants.boleto.shopperStatement, boletoShopperStatement)
+}
+
+export const setBoletoConfig = ({ paymentMethodTypes, boletoDeliveryDate, boletoShopperStatement }) => {
+    const hasBoleto = paymentMethodTypes.includes(constants.paymentMethodTypes.invoice)
     eventEmitter.store.emit(constants.boleto.enabled, hasBoleto)
 
     if (hasBoleto) {
-        boletoDeliveryDate &&
-            eventEmitter.store.emit(
-                constants.boleto.deliveryDate,
-                boletoDeliveryDate
-            )
-        boletoShopperStatement &&
-            eventEmitter.store.emit(
-                constants.boleto.shopperStatement,
-                boletoShopperStatement
-            )
+        setDeliveryDate(boletoDeliveryDate)
+        setShopperStatement(boletoShopperStatement)
     }
 }
 
 export const presentToShopper = customPaymentProperties => {
     const checkoutBoleto = store.get(constants.checkout.boleto)
-    const options = {
-        action: customPaymentProperties,
-        selector: '#present-shopper',
-        checkoutComponent: checkoutBoleto,
-    }
+    const options = { action: customPaymentProperties, selector: '#present-shopper', checkoutComponent: checkoutBoleto }
 
     createPresentToShopperModal(() => {
         createFromAction(options)
@@ -59,10 +43,7 @@ const createBoletoCheckout = () => {
 
     const address = order().billingAddress()
 
-    const shopperName = {
-        firstName: address.firstName(),
-        lastName: address.lastName(),
-    }
+    const shopperName = { firstName: address.firstName(), lastName: address.lastName() }
     const billingAddress = {
         city: address.city(),
         country: address.selectedCountry(),
@@ -72,12 +53,7 @@ const createBoletoCheckout = () => {
         street: address.address1(),
     }
     const options = { data: { shopperName, billingAddress } }
-    const checkoutOptions = {
-        configuration,
-        selector: '#adyen-boleto-payment',
-        type: 'boletobancario',
-        options,
-    }
+    const checkoutOptions = { configuration, selector: '#adyen-boleto-payment', type: 'boletobancario', options }
 
     checkout.createCheckout(checkoutOptions, checkout => {
         eventEmitter.store.emit(constants.checkout.boleto, checkout)
