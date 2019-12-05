@@ -2,7 +2,7 @@ import pubsub from 'pubsub'
 import notifier from 'notifier'
 import $ from 'jquery'
 import { store } from './components'
-import { createSpinner, destroySpinner, eventEmitter } from './utils'
+import { createSpinner, destroySpinner, eventEmitter, hideLoaders } from './utils'
 import createError from './utils/createError'
 import * as constants from './constants'
 import { presentToShopper, setBoletoConfig } from './components'
@@ -85,13 +85,12 @@ class ViewModel {
         eventEmitter.store.emit(constants.installments, [])
     }
 
-    orderSubmitted = () => {
-        if (store.has(constants.orderPayload)) {
-            const { resultCode, customPaymentProperties } = store.get(constants.orderPayload)
-            const isPresentToShopper = resultCode === constants.presentToShopper
-            isPresentToShopper && presentToShopper(customPaymentProperties)
-        }
+    presentToShopper = () => {
+        const { resultCode, customPaymentProperties } = store.get(constants.orderPayload)
+        const isPresentToShopper = resultCode === constants.presentToShopper
+        isPresentToShopper && presentToShopper(customPaymentProperties)
     }
+    orderSubmitted = () => store.has(constants.orderPayload) && this.presentToShopper()
 
     subscribeToTopics = () => {
         const {
@@ -119,11 +118,6 @@ class ViewModel {
         $.Topic(ORDER_CREATED).subscribe(this.reset)
         $.Topic(PAGE_CHANGED).subscribe(this.handlePageChanged)
         $.Topic(ORDER_SUBMISSION_SUCCESS).subscribe(this.orderSubmitted)
-
-        const hideLoaders = () => {
-            const toggleElementAttribute = el => el.classList.toggle('hide', true)
-            document.querySelectorAll('.loader-wrapper').forEach(toggleElementAttribute)
-        }
 
         $.Topic(NOTIFICATION_ADD).subscribe(hideLoaders)
     }
