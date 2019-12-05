@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/Adyen/adyen-oracle-commerce-cloud.svg?branch=master)](https://travis-ci.org/Adyen/adyen-oracle-commerce-cloud)
-[![Coverage Status](https://coveralls.io/repos/github/Adyen/adyen-oracle-commerce-cloud/badge.svg)](https://coveralls.io/github/Adyen/adyen-oracle-commerce-cloud)
+[![Coverage Status](https://coveralls.io/repos/github/Adyen/adyen-oracle-commerce-cloud/badge.svg?branch=master)](https://coveralls.io/github/Adyen/adyen-oracle-commerce-cloud?branch=master)
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/Adyen/adyen-oracle-commerce-cloud)
 # Adyen Oracle Commerce Cloud
 ## Requirements
