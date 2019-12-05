@@ -63,3 +63,4 @@ export const boleto = {
     deliveryDate: 'boletoDeliveryDate',
     shopperStatement: 'boletoShopperStatement',
 }
+export const localPaymentMethods = 'localPaymentMethods'

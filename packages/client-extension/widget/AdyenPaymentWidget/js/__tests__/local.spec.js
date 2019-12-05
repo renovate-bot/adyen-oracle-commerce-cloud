@@ -432,6 +432,9 @@ describe('Local', () => {
             selector: '#adyen-dotpay-payment',
             type: 'dotpay',
         })
+
+        const el = document.querySelector('#adyen-dotpay-payment')
+        expect(el).not.toBeUndefined()
     })
 
     it('should have correct callback', function() {

@@ -49,6 +49,7 @@ class Store {
 
     // Local
     checkoutLocal = ko.observable([])
+    localPaymentMethods = ko.observableArray()
 
     get installmentsEnabled() {
         const hasInstallments = !!this.installments().length

@@ -98,4 +98,24 @@
         <div id="adyen-boleto-payment" class="adyen-component"></div>
     </div>
     <!-- /ko -->
+    <!-- ko foreach: store.localPaymentMethods() -->
+    <div class="collapse-heading">
+        <strong>
+            <span
+                    class="collapse-toggle collapsed"
+                    data-toggle="collapse"
+                    data-bind="attr: { 'data-target': '#adyen-' + $data.type + '-wrapper' }"
+            >
+                <button data-bind="text: $data.name"></button>
+            </span>
+        </strong>
+        <div class="adyen-wrapper collapse" data-bind="attr: { id: 'adyen-' + $data.type + '-wrapper' }">
+            <div class="loader-wrapper hide">
+                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                <div style="font-weight: bold; font-size: 16px;">Processing...</div>
+            </div>
+            <div class="adyen-component" data-bind="attr: { id: 'adyen-' + $data.type + '-payment' }"></div>
+        </div>
+    </div>
+    <!-- /ko -->
 </div>

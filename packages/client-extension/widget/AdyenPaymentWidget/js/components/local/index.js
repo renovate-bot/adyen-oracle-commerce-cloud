@@ -16,35 +16,6 @@ const isLocalPaymentMethod = paymentMethod => {
     return isLocal
 }
 
-const createLocalComponent = ({ type, name }) => {
-    const headingNode = document.createElement('div')
-    headingNode.classList.add('collapse-heading')
-    headingNode.innerHTML = ` <strong>
-        <span
-            class="collapse-toggle collapsed"
-            data-toggle="collapse"
-            data-target="#adyen-${type}-wrapper"
-        >
-          <button>${name}</button>
-        </span>
-      </strong>`
-    const component = document.createElement('div')
-    component.setAttribute('id', `adyen-${type}-wrapper`)
-    component.classList.add('adyen-wrapper', 'collapse')
-
-    component.innerHTML = `
-        <div class="loader-wrapper hide">
-            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            <div style="font-weight: bold; font-size: 16px;">Processing...</div>
-        </div>
-        <div id="adyen-${type}-payment" class="adyen-component"></div>
-    `
-    const adyenNode = document.getElementById('adyen-collapse-heading')
-    adyenNode.appendChild(headingNode)
-    adyenNode.appendChild(component)
-    return adyenNode
-}
-
 const createLocalCheckout = (acc, localPaymentMethod) => {
     const { type } = localPaymentMethod
     const checkout = new Checkout(type)
@@ -53,13 +24,13 @@ const createLocalCheckout = (acc, localPaymentMethod) => {
 
     const configuration = { onSubmit, onChange, showPayButton: true }
 
-    createLocalComponent(localPaymentMethod)
     const checkoutOptions = type => ({ configuration, selector: `#adyen-${type}-payment`, type })
     checkout.createCheckout(checkoutOptions(type), checkout => ({ ...acc, [type]: checkout }))
 }
 
 const createLocalPaymentCheckout = ({ paymentMethods }) => {
     const localPaymentMethods = paymentMethods.filter(isLocalPaymentMethod)
+    eventEmitter.store.emit(constants.localPaymentMethods, localPaymentMethods)
     const localPaymentMethodsCheckout = localPaymentMethods.reduce(createLocalCheckout, {})
 
     eventEmitter.store.emit(constants.checkout.local, localPaymentMethodsCheckout)
