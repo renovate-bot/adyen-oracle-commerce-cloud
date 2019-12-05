@@ -10,8 +10,10 @@ export const paymentMethodTypes = {
     invoice: 'invoice',
     local: 'local',
 }
-export const adyenCheckoutComponentUrl = env =>
-    `https://checkoutshopper-${env.toLowerCase()}.adyen.com/checkoutshopper/sdk/3.3.0/adyen.js`
+export const adyenUrl = env => `https://checkoutshopper-${env.toLowerCase()}.adyen.com`
+export const adyenCssUrl = env => `${adyenUrl(env)}/checkoutshopper/sdk/3.3.0/adyen.css`
+export const adyenCheckoutComponentUrl = env => `${adyenUrl(env)}/checkoutshopper/sdk/3.3.0/adyen.js`
+
 export const locale = 'locale'
 export const countries = {
     brazil: { locale: 'pt_br', currency: 'brl' },

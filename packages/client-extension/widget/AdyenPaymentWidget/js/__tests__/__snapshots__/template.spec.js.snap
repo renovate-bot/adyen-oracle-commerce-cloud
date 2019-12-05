@@ -3,10 +3,6 @@
 exports[`Template should render 1`] = `
 Object {
   Symbol(dom): <body>
-    <link
-      href="https://checkoutshopper-live.adyen.com/checkoutshopper/sdk/3.3.0/adyen.css"
-      rel="stylesheet"
-    />
     <legend />
     <div
       class="oc-panel panel-1"

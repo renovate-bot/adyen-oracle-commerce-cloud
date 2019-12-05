@@ -3,10 +3,6 @@
 exports[`Card should display combo card 1`] = `
 Object {
   Symbol(dom): <body>
-    <link
-      href="https://checkoutshopper-live.adyen.com/checkoutshopper/sdk/3.3.0/adyen.css"
-      rel="stylesheet"
-    />
     <legend />
     <div
       class="oc-panel panel-1"
@@ -99,10 +95,6 @@ Object {
 exports[`Card should display installments 1`] = `
 Object {
   Symbol(dom): <body>
-    <link
-      href="https://checkoutshopper-live.adyen.com/checkoutshopper/sdk/3.3.0/adyen.css"
-      rel="stylesheet"
-    />
     <legend />
     <div
       class="oc-panel panel-1"

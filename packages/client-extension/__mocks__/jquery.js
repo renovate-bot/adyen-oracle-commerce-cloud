@@ -6,6 +6,7 @@ const $ = jest.fn(() => ({
     removeClass: jest.fn(arg => null),
     show: jest.fn(),
     hide: jest.fn(),
+    append: jest.fn()
 }))
 
 const methods = {

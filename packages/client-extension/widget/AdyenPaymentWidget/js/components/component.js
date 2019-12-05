@@ -40,6 +40,11 @@ class Component {
     }
 
     render = () => {
+        const environment = store.get(constants.environment)
+        const href = constants.adyenCssUrl(environment)
+        const cssLink = `<link rel="stylesheet" href="${href}" />`
+        $('head').append(cssLink)
+
         store.get(constants.ajax)('originKeys', this.getOriginKeysSuccessResponse)
     }
 

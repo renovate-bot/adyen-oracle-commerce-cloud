@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="https://checkoutshopper-live.adyen.com/checkoutshopper/sdk/3.3.0/adyen.css" />
-
 <legend data-bind="widgetLocaleText: 'paymentDetails'"></legend>
 
 <div id="adyen-collapse-heading" class="oc-panel panel-1" data-oc-id="panel-1" data-bind="onRender: onRender">
