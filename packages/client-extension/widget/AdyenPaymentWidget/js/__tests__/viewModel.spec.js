@@ -12,6 +12,7 @@ const storedPaymentType = 'storedPayment'
 describe('View Model', () => {
     let widget
     beforeEach(() => {
+        jest.clearAllMocks()
         widget = new Widget()
     })
 
@@ -25,7 +26,7 @@ describe('View Model', () => {
     test.each(['pt_BR', 'es_MX'])(
         'should have enabled installments for %s',
         locale => {
-            widget.locale = jest.fn(() => locale)
+            widget.setLocale(locale)
             viewModel.onLoad(widget)
             eventEmitter.store.emit(constants.installments, [
                 { numberOfInstallments: 3 },
@@ -38,16 +39,14 @@ describe('View Model', () => {
     )
 
     it('should have Brazil enabled', () => {
-        widget.locale = jest.fn(() => 'pt_BR')
-        widget.cart = jest.fn(() => ({
-            currencyCode: jest.fn(() => 'BRL'),
-        }))
+        widget.setLocale('pt_BR')
+        widget.setCurrencyCode('BRL')
         viewModel.onLoad(widget)
         expect(store.get(constants.brazilEnabled)).toBeTruthy()
     })
 
     it('should have JSON installment options', () => {
-        widget.locale = jest.fn(() => 'pt_BR')
+        widget.setLocale('pt_BR')
         const installmentOptionsString = '[[1,3,31],[5,5,24]]'
         widget.setGatewaySettings(
             installmentsOptionsId,
@@ -61,7 +60,7 @@ describe('View Model', () => {
     })
 
     it('should send error notification if installments code is wrong', () => {
-        widget.locale = jest.fn(() => 'pt_BR')
+        widget.setLocale('pt_BR')
         const installmentOptionsString = 'invalid_json'
         widget.setGatewaySettings(
             installmentsOptionsId,
@@ -74,14 +73,6 @@ describe('View Model', () => {
             'translated_installmentsConfiguration',
             true
         )
-    })
-
-    it('should have boleto enabled', () => {
-        const { invoice } = constants.paymentMethodTypes
-        widget.setGatewaySettings(paymentMethodTypes, [invoice])
-        viewModel.onLoad(widget)
-
-        expect(store.get(constants.boleto.enabled)).toEqual(true)
     })
 
     it('should have boleto with delivery date and shopper statement', () => {

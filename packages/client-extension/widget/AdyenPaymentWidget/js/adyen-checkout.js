@@ -16,18 +16,13 @@ class ViewModel {
         storedPayment,
         boletoDeliveryDate,
         boletoShopperStatement,
-        paymentMethodTypes,
     }) => {
         eventEmitter.store.emit(constants.environment, environment)
 
         store.get(constants.isAllowedCountryForInstallments) && this.setInstallments(installmentsOptionsId)
         eventEmitter.store.emit(constants.storedPaymentType, storedPayment)
 
-        setBoletoConfig({
-            boletoDeliveryDate: Number(boletoDeliveryDate),
-            boletoShopperStatement,
-            paymentMethodTypes,
-        })
+        setBoletoConfig({ boletoDeliveryDate: Number(boletoDeliveryDate), boletoShopperStatement })
     }
 
     setSiteSettings = () => {

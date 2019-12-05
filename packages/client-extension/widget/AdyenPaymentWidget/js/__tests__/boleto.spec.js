@@ -1,4 +1,5 @@
 import Widget from '../../../../__mocks__/widget'
+import paymentMethodsResponseMock from '../../../../__mocks__/paymentMethods'
 import viewModel from '../adyen-checkout'
 
 jest.mock('../utils/checkout')
@@ -29,7 +30,7 @@ describe('Boleto', () => {
         Checkout.prototype.onChange = jest.fn()
         Checkout.prototype.onSubmit = jest.fn()
 
-        createBoletoCheckout()
+        createBoletoCheckout(paymentMethodsResponseMock)
         expect(Checkout.prototype.createCheckout).toHaveBeenCalled()
     })
 

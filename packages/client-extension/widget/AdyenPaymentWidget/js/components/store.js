@@ -43,7 +43,7 @@ class Store {
     isDone = ko.observable(false)
 
     // Boleto
-    boletoEnabled = false
+    boletoEnabled = ko.observable(false)
     boletoDeliveryDate = ''
     boletoShopperStatement = ''
 

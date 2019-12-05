@@ -1,17 +1,28 @@
 import * as constants from '../../constants'
 import { Checkout, eventEmitter } from '../../utils'
 
-const hasType = paymentMethod => 'type' in paymentMethod
-const isNotScheme = paymentMethod => hasType(paymentMethod) && paymentMethod.type !== 'scheme'
-const hasDetails = paymentMethod => isNotScheme(paymentMethod) && 'details' in paymentMethod
-const hasOneItem = paymentMethod => hasDetails(paymentMethod) && paymentMethod.details.length === 1
-const getDetail = paymentMethod => hasOneItem(paymentMethod) && paymentMethod.details[0]
-const isValid = (paymentMethod, key, value) => getDetail(paymentMethod) && getDetail(paymentMethod)[key] === value
+const unsupportedTypes = ['wechatpayWeb', 'scheme', 'boleto', 'boletobancario']
+const createValidator = paymentMethod => {
+    return {
+        // eslint-disable-next-line complexity
+        validate: (key, value) => {
+            const hasType = 'type' in paymentMethod
+            const isValidType = hasType && !unsupportedTypes.includes(paymentMethod.type)
+            const hasDetails = isValidType && 'details' in paymentMethod
+            const hasOneItem = hasDetails && paymentMethod.details.length === 1
+            const detail = hasOneItem && paymentMethod.details[0]
+            const keyIsIssuerAndTypeIsSelect = detail && detail[key] === value
+            const isValid = !hasDetails || keyIsIssuerAndTypeIsSelect
+            return isValidType && isValid
+        },
+    }
+}
 
 const isLocalPaymentMethod = paymentMethod => {
-    const isIssuer = isValid(paymentMethod, 'key', 'issuer')
-    const isSelect = isValid(paymentMethod, 'type', 'select')
-    const isLocal = isIssuer && isSelect
+    const { validate } = createValidator(paymentMethod)
+    const keyIsIssuer = validate('key', 'issuer')
+    const typeIsSelect = validate('type', 'select')
+    const isLocal = keyIsIssuer && typeIsSelect
 
     return isLocal
 }

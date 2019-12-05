@@ -1,10 +1,11 @@
 import nock from 'nock'
 import Widget from '../../../../__mocks__/widget'
+import paymentMethodsResponseMock from '../../../../__mocks__/paymentMethods'
+import originKeysResponseMock from '../../../../__mocks__/originKeys'
 import * as constants from '../constants'
 import viewModel from '../adyen-checkout'
 import { store, Component } from '../components'
 import { eventEmitter } from '../utils'
-import mocks from '../utils/tests/mocks'
 
 jest.mock('../components/boleto', () => {
     require.requireActual('../components/store').default
@@ -31,18 +32,16 @@ describe('Component', () => {
     })
 
     it('should fetch origin key, payment methods and adyen checkout script', async done => {
-        widget.locale = jest.fn(() => 'pt_BR')
-        widget.cart = jest.fn(() => ({
-            currencyCode: jest.fn(() => 'BRL'),
-        }))
+        widget.setLocale('pt_BR')
+        widget.setCurrencyCode('BRL')
         viewModel.onLoad(widget)
         const component = new Component()
 
         const scope = nock('http://localhost/ccstorex/custom/adyen/v1')
             .get('/originKeys')
-            .reply(200, mocks.originKeys)
-            .get('/paymentMethods')
-            .reply(200, mocks.paymentMethods)
+            .reply(200, originKeysResponseMock)
+            .post('/paymentMethods')
+            .reply(200, paymentMethodsResponseMock)
 
         const getScriptCb = () => {
             const paymentMethods = store.get(constants.paymentMethodsResponse)
@@ -51,7 +50,7 @@ describe('Component', () => {
             done()
         }
 
-        nock('https://checkoutshopper-live.adyen.com')
+        nock('https://checkoutshopper-test.adyen.com')
             .get('/checkoutshopper/sdk/3.3.0/adyen.js')
             .reply(200, getScriptCb)
 

@@ -1,3 +1,6 @@
+import { store } from '../components'
+import * as constants from '../constants'
+
 export const createPresentToShopperModal = cb => {
     const node = document.createElement('div')
     node.setAttribute(
@@ -21,8 +24,13 @@ export const createPresentToShopperModal = cb => {
 
     wrapper.addEventListener('click', clickEvent)
 
-    node.innerHTML =
-        '<link rel="stylesheet" href="https://checkoutshopper-live.adyen.com/checkoutshopper/sdk/3.2.0/adyen.css" />'
+    const environment = store.get(constants.environment)
+
+    node.innerHTML = `<link 
+        rel="stylesheet" 
+        href="https://checkoutshopper-${environment}.adyen.com/checkoutshopper/sdk/3.2.0/adyen.css" 
+        />`
+
     node.appendChild(modal)
     node.appendChild(wrapper)
 

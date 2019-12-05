@@ -29,8 +29,14 @@ class Component {
 
     getOriginKeysSuccessResponse = originKeysRes => {
         const { origin } = window.location
+        const cart = store.get(constants.cart)
+        const { amount, currencyCode } = cart()
+
         eventEmitter.store.emit(constants.originKey, originKeysRes.originKeys[origin])
-        store.get(constants.ajax)('paymentMethods', this.getPaymentMethods)
+        store.get(constants.ajax)('paymentMethods', this.getPaymentMethods, {
+            method: 'post',
+            body: { amount: { currency: currencyCode(), value: amount() } },
+        })
     }
 
     render = () => {
@@ -39,12 +45,16 @@ class Component {
 
     getPaymentMethods = paymentMethodsResponse => {
         eventEmitter.store.emit(constants.paymentMethodsResponse, paymentMethodsResponse)
+        const environment = store.get(constants.environment)
+        const url = constants.adyenCheckoutComponentUrl(environment)
 
-        $.getScript(constants.adyenCheckoutComponentUrl, () => {
+        const createComponents = () => {
             createCardCheckout()
             createLocalPaymentCheckout(paymentMethodsResponse)
-            store.get(constants.brazilEnabled) && createBoletoCheckout()
-        })
+            createBoletoCheckout(paymentMethodsResponse)
+        }
+
+        $.getScript(url, createComponents)
     }
 }
 
