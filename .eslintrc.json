@@ -1,6 +1,6 @@
 {
   "parser": "babel-eslint",
-  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+  "extends": ["eslint:recommended", "plugin:prettier/recommended", "plugin:testcafe/recommended"],
   "env": {
     "es6": true,
     "node": true,
@@ -21,7 +21,8 @@
     "sourceType": "module"
   },
   "plugins": [
-    "prettier"
+    "prettier",
+    "testcafe"
   ],
   "ignorePatterns": ["spec.js", "__mocks__", "__tests__", "min.js"]
 }
