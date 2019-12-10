@@ -11,7 +11,7 @@ export default {
     wrongExpDate: '1122',
     expDate: '1020',
     cvc: '737',
-    cardTypes: { credit: 'Credit Card', debit: 'Debit Card' },
+    cardTypes: { credit: 'creditCard', debit: 'debitCard' },
 
     threeDS2CorrectAnswer: 'password',
     threeDS2WrongAnswer: 'wrong answer',

@@ -1,6 +1,7 @@
 import PaymentPage from '../modules/PaymentPage'
 import User from '../modules/User'
 import config from '../config'
+import { Selector } from 'testcafe'
 
 const { adminUser } = config
 const { username, password } = adminUser
@@ -8,42 +9,33 @@ const user = new User(adminUser)
 const paymentPage = new PaymentPage(user)
 
 fixture`Oracle frontend logged in user card payments`
+    .page(config.storeFrontURL)
     .httpAuth({ username, password })
     .beforeEach(async t => {
         await t.useRole(user.regularUser)
+        await t
+            .hover(Selector('#headerCurrencyPicker'))
+            .click(Selector('.currencyCodeWidth').withText('BRL'))
+            .hover(Selector('#CC-header-language-link'))
+            .click(Selector('span').withText(/^PT_BR.*/))
         await paymentPage.addProductToCart()
         await paymentPage.goToPaymentsPage()
     })
 
 test('Successful card payment without 3DS', async t => {
-    await paymentPage.doCardPayment(
-        'Attila test',
-        config.masterCardWithout3D,
-        config.expDate,
-        config.cvc
-    )
+    await paymentPage.doCardPayment('Attila test', config.masterCardWithout3D, config.expDate, config.cvc)
     await paymentPage.placeOrder()
     await paymentPage.expectSuccess()
 })
 
 test('Refused card payment without 3DS', async t => {
-    await paymentPage.doCardPayment(
-        'Attila test',
-        config.masterCardWithout3D,
-        config.wrongExpDate,
-        config.cvc
-    )
+    await paymentPage.doCardPayment('Attila test', config.masterCardWithout3D, config.wrongExpDate, config.cvc)
     await paymentPage.placeOrder()
     await paymentPage.expectRefusal()
 })
 
 test('Successful card payment with 3DS2', async t => {
-    await paymentPage.doCardPayment(
-        'Attila test',
-        config.masterCard3DS2,
-        config.expDate,
-        config.cvc
-    )
+    await paymentPage.doCardPayment('Attila test', config.masterCard3DS2, config.expDate, config.cvc)
     await paymentPage.placeOrder()
     await paymentPage.do3DS2Validation(config.threeDS2CorrectAnswer)
     await paymentPage.expectSuccess()
@@ -87,10 +79,7 @@ test.skip('Successful Klarna payment', async t => {
     await user.setUser('klarnaApprovedUser')
     await paymentPage.goToPaymentsPage()
 
-    await paymentPage.doKlarnaPayment(
-        'continue',
-        config.klarnaApprovedNLDateOfBirth
-    )
+    await paymentPage.doKlarnaPayment('continue', config.klarnaApprovedNLDateOfBirth)
     await paymentPage.expectSuccess()
 })
 
@@ -107,12 +96,7 @@ test.skip('Cancelled Klarna payment', async t => {
 })
 
 test('Successful payment with combo card', async t => {
-    await paymentPage.doCardPayment(
-        'Attila test',
-        config.masterCard3DS2,
-        config.expDate,
-        config.cvc
-    )
+    await paymentPage.doCardPayment('Attila test', config.masterCard3DS2, config.expDate, config.cvc)
     await paymentPage.selectCardType(config.cardTypes.debit)
     await paymentPage.placeOrder()
     await paymentPage.do3DS2Validation(config.threeDS2CorrectAnswer)
@@ -120,12 +104,7 @@ test('Successful payment with combo card', async t => {
 })
 
 test('Successful payment with installments', async t => {
-    await paymentPage.doCardPayment(
-        'Attila test',
-        config.masterCardWithout3D,
-        config.expDate,
-        config.cvc
-    )
+    await paymentPage.doCardPayment('Attila test', config.masterCardWithout3D, config.expDate, config.cvc)
     await paymentPage.selectInstallments()
     await paymentPage.placeOrder()
     await paymentPage.expectSuccess()

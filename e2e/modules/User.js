@@ -13,47 +13,25 @@ export default class User {
 
     checkoutGuestInput = Selector('#CC-checkoutRegistration-email')
 
-    checkoutPageUserFirstNameInput = Selector(
-        '#CC-checkoutAddressBook-sfirstname'
-    )
-    checkoutPageUserLastNameInput = Selector(
-        '#CC-checkoutAddressBook-slastname'
-    )
-    checkoutPageUserStreetLine1Input = Selector(
-        '#CC-checkoutAddressBook-saddress1'
-    )
-    checkoutPageUserStreetLine2Input = Selector(
-        '#CC-checkoutAddressBook-saddress2'
-    )
+    checkoutPageUserFirstNameInput = Selector('#CC-checkoutAddressBook-sfirstname')
+    checkoutPageUserLastNameInput = Selector('#CC-checkoutAddressBook-slastname')
+    checkoutPageUserStreetLine1Input = Selector('#CC-checkoutAddressBook-saddress1')
+    checkoutPageUserStreetLine2Input = Selector('#CC-checkoutAddressBook-saddress2')
     checkoutPageUserCityInput = Selector('#CC-checkoutAddressBook-scity')
     checkoutPageUserPostCodeInput = Selector('#CC-checkoutAddressBook-szipcode')
     checkoutPageUserCountrySelect = Selector('#CC-checkoutAddressBook-scountry')
-    checkoutPageUserCountrySelectOption = this.checkoutPageUserCountrySelect.find(
-        'option'
-    )
+    checkoutPageUserCountrySelectOption = this.checkoutPageUserCountrySelect.find('option')
     checkoutPageUserStateSelect = Selector('#CC-checkoutAddressBook-sstate')
-    checkoutPageUserStateSelectOption = this.checkoutPageUserStateSelect.find(
-        'option'
-    )
+    checkoutPageUserStateSelectOption = this.checkoutPageUserStateSelect.find('option')
     checkoutPageUserTelephoneInput = Selector('#CC-checkoutAddressBook-sphone')
 
     constructor({ password }) {
         this.password = password
     }
 
-    regularUser = Role(
-        config.storeFrontURL,
-        async t => {
-            await this.setUser()
-            await t.wait(1000)
-            await t
-                .hover(Selector('#headerCurrencyPicker'))
-                .click(Selector('.currencyCodeWidth').withText('BRL'))
-                .hover(Selector('#CC-header-language-link'))
-                .click(Selector('span').withText('PT_BR - Português (Brasil)'))
-        },
-        { preserveUrl: true }
-    )
+    regularUser = Role(config.storeFrontURL, async t => {
+        await this.setUser()
+    })
 
     _setGuestUser = async (
         email,
@@ -79,38 +57,22 @@ export default class User {
                 .typeText(this.checkoutPageUserStreetLine1Input, street)
                 .typeText(this.checkoutPageUserStreetLine2Input, houseNumber)
         } else {
-            await t.typeText(
-                this.checkoutPageUserStreetLine1Input,
-                street + ' ' + houseNumber
-            )
+            await t.typeText(this.checkoutPageUserStreetLine1Input, street + ' ' + houseNumber)
         }
 
         await t
             .typeText(this.checkoutPageUserCityInput, city)
             .typeText(this.checkoutPageUserPostCodeInput, postCode)
             .click(this.checkoutPageUserCountrySelect)
-            .click(
-                this.checkoutPageUserCountrySelectOption.withAttribute(
-                    'value',
-                    countryCode
-                )
-            )
+            .click(this.checkoutPageUserCountrySelectOption.withAttribute('value', countryCode))
             .click(this.checkoutPageUserStateSelect)
-            .click(
-                this.checkoutPageUserStateSelectOption.withAttribute(
-                    'value',
-                    stateCode
-                )
-            )
+            .click(this.checkoutPageUserStateSelectOption.withAttribute('value', stateCode))
             .typeText(this.checkoutPageUserTelephoneInput, phoneNumber)
     }
 
     userRoles = useStreetLine2ForHouseNumber => ({
         regularUser: async () =>
-            await this._setUser(
-                config.registeredUser.regular.username,
-                config.registeredUser.regular.password
-            ),
+            await this._setUser(config.registeredUser.regular.username, config.registeredUser.regular.password),
         guestUser: () =>
             this._setGuestUser(
                 'guest@adyen.com',

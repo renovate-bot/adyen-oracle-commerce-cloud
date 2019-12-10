@@ -1,7 +1,7 @@
 {
   "browsers": ["chrome"],
   "src": "./e2e/tests",
-  "quarantineMode": true,
   "pageLoadTimeout": 7000,
-  "developmentMode": true
+  "skipJsErrors": true,
+  "quarantineMode": true
 }

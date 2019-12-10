@@ -5,12 +5,8 @@ export default class PaymentPage {
 
     navBar = Selector('.nav.navbar-nav')
 
-    shippingMethodsButton = Selector(
-        '#shipping-method-buttons-container .continue'
-    )
-    backToShippingMethods = Selector('.opc-progress-bar-item').withText(
-        'Shipping'
-    )
+    shippingMethodsButton = Selector('#shipping-method-buttons-container .continue')
+    backToShippingMethods = Selector('.opc-progress-bar-item').withText('Shipping')
 
     productCard = Selector('#product-grid .row').child(0)
     addToCartButton = Selector('#cc-prodDetailsAddToCart')
@@ -23,9 +19,7 @@ export default class PaymentPage {
     afterPayInput = Selector('#afterpay_default')
     oneClickInput = Selector('.adyen_oneclick')
     holderNameInput = Selector('input[name="nameOnCard"]')
-    cardNumberIFrame = Selector(
-        '.adyen-checkout__card__cardNumber__input iframe'
-    )
+    cardNumberIFrame = Selector('.adyen-checkout__card__cardNumber__input iframe')
     cardNumberInput = Selector('#encryptedCardNumber')
     expDateIFrame = Selector('.adyen-checkout__card__exp-date__input iframe')
     expDateInput = Selector('#encryptedExpiryDate')
@@ -33,7 +27,7 @@ export default class PaymentPage {
     cvcInput = Selector('input.cvc-field')
     klarnaIframe = Selector('#klarna-hpp-instance-fullscreen')
 
-    boletoToggle = Selector('span[data-target="#adyen-boleto-wrapper"]')
+    boletoToggle = Selector('span[data-target="#adyen-invoice-wrapper"]')
     boletoName = Selector(
         '.adyen-checkout__field--firstName > label:nth-child(1) > span:nth-child(2) > input:nth-child(1)'
     )
@@ -53,26 +47,16 @@ export default class PaymentPage {
 
     presentShopper = Selector('#present-shopper')
 
-    iDealDropDown = Selector(
-        '#iDealContainer .adyen-checkout__dropdown__button'
-    )
-    iDealDropDownList = Selector(
-        '#iDealContainer .adyen-checkout__dropdown__list'
-    )
-    iDealDropDownListElement = Selector(
-        '#iDealContainer .adyen-checkout__dropdown__list li'
-    )
+    iDealDropDown = Selector('#iDealContainer .adyen-checkout__dropdown__button')
+    iDealDropDownList = Selector('#iDealContainer .adyen-checkout__dropdown__list')
+    iDealDropDownListElement = Selector('#iDealContainer .adyen-checkout__dropdown__list li')
     iDealContinueButtonOnHPP = Selector('input[type="submit"]')
 
-    threeDS2ChallengeIframe = Selector(
-        '.adyen-checkout__threeds2__challenge iframe'
-    )
+    threeDS2ChallengeIframe = Selector('.adyen-checkout__threeds2__challenge iframe')
     threeDS2ChallengeInput = Selector('input[name="answer"]')
     threeDS2ChallengeSubmit = Selector('input[type="submit"]')
 
-    termsAndConditionsCheckbox = Selector(
-        '.checkout-agreement input[type="checkbox"]'
-    )
+    termsAndConditionsCheckbox = Selector('.checkout-agreement input[type="checkbox"]')
 
     constructor(user) {
         this.user = user
@@ -83,25 +67,15 @@ export default class PaymentPage {
     klarnaBuyButton = Selector('#buy-button')
     klarnaDateOfBirthInput = Selector('#purchase-approval-date-of-birth')
     klarnaContinueButton = Selector('#purchase-approval-continue')
-    klarnaRedirectButton = Selector(
-        '#confirmation__footer-button-wrapper button'
-    )
+    klarnaRedirectButton = Selector('#confirmation__footer-button-wrapper button')
     klarnaCancelButton = Selector('#back-link')
 
-    openInvoiceGenderRadioButton = Selector(
-        'input[name="personalDetails__gender"]'
-    )
-    openInvoiceDateOfBirthInput = Selector(
-        'input[name="personalDetails__dateOfBirth"]'
-    )
-    openInvoicePhoneNumberInput = Selector(
-        'input[name="personalDetails__telephoneNumber"]'
-    )
+    openInvoiceGenderRadioButton = Selector('input[name="personalDetails__gender"]')
+    openInvoiceDateOfBirthInput = Selector('input[name="personalDetails__dateOfBirth"]')
+    openInvoicePhoneNumberInput = Selector('input[name="personalDetails__telephoneNumber"]')
 
     shippingMethodDropdown = Selector('#cc-shippingOptions-dropDown')
-    shippingMethodOption = Selector(
-        '#CC-checkoutOrderSummary-shippingMethods ul'
-    ).child(0)
+    shippingMethodOption = Selector('#CC-checkoutOrderSummary-shippingMethods ul').child(0)
 
     checkoutUrl = '/checkout'
 
@@ -144,8 +118,8 @@ export default class PaymentPage {
             .switchToIframe(this.threeDS2ChallengeIframe)
             .typeText(this.threeDS2ChallengeInput, answer)
             .click(this.threeDS2ChallengeSubmit)
-            .switchToMainWindow()
             .wait(5000)
+            .switchToMainWindow()
     }
 
     goToCheckoutPageWithFullCart = async () => {
@@ -170,21 +144,10 @@ export default class PaymentPage {
         return selector
     }
 
-    fillBoletoDetails = async ({
-        firstName,
-        lastName,
-        houseNumber,
-        ssn,
-        city,
-        street,
-        zip,
-    }) => {
+    fillBoletoDetails = async ({ firstName, lastName, houseNumber, ssn, city, street, zip }) => {
         await t.typeText(await this.clearInput(this.boletoName), firstName)
         await t.typeText(await this.clearInput(this.boletoLastName), lastName)
-        await t.typeText(
-            await this.clearInput(this.boletoHouseNumber),
-            houseNumber
-        )
+        await t.typeText(await this.clearInput(this.boletoHouseNumber), houseNumber)
         await t.typeText(await this.clearInput(this.boletoCity), city)
         await t.typeText(await this.clearInput(this.boletoStreet), street)
         await t.typeText(await this.clearInput(this.boletoSsn), ssn)
@@ -204,19 +167,15 @@ export default class PaymentPage {
 
     selectCardType = async cardType => {
         this.comboCardSelect = Selector('#comboCard')
-        this.comboCardOption = this.comboCardSelect.find('option')
-        await t
-            .click(this.comboCardSelect)
-            .click(this.comboCardOption.withText(cardType))
+        this.comboCardOption = this.comboCardSelect.find(`option[value="${cardType}"]`)
+        await t.click(this.comboCardSelect).click(this.comboCardOption)
     }
 
     selectInstallments = async () => {
         this.installmentsSelect = Selector('#installments')
         this.installmentsOption = this.installmentsSelect.find('option')
 
-        await t
-            .click(this.installmentsSelect)
-            .click(this.installmentsOption.withText('3x'))
+        await t.click(this.installmentsSelect).click(this.installmentsOption.withText('3x'))
     }
 
     checkTermsAndConditions = async () => {
@@ -255,28 +214,18 @@ export default class PaymentPage {
 
     expectRefusal = async () => {
         await t.wait(10000)
-        await t
-            .expect(this.errorMessage.innerText)
-            .eql('The payment is REFUSED.')
+        await t.expect(this.errorMessage.innerText).ok('The payment is REFUSED.')
     }
 
     expect3DSRefusal = async () => {
-        await t
-            .expect(this.errorMessage.innerText)
-            .eql(
-                '3D-secure validation was unsuccessful',
-                '3D-secure validation was unsuccessful'
-            )
+        await t.expect(this.errorMessage.innerText).ok('Initiate Payment transaction failed.')
     }
 
     expectError = async () => {
         const location = await this.getLocation()
         await t
             .expect(this.errorMessage.innerText)
-            .eql(
-                'Your payment failed, Please try again later',
-                'Your payment failed, Please try again later'
-            )
+            .eql('Your payment failed, Please try again later', 'Your payment failed, Please try again later')
             .expect(location)
             .contains('checkout/cart')
     }
@@ -342,9 +291,7 @@ export default class PaymentPage {
     doAfterPayPayment = async (gender, dateOfBirth, phoneNumber) => {
         await t
             .click(this.afterPayInput)
-            .click(
-                this.openInvoiceGenderRadioButton.withAttribute('value', gender)
-            )
+            .click(this.openInvoiceGenderRadioButton.withAttribute('value', gender))
             .typeText(this.openInvoiceDateOfBirthInput, dateOfBirth)
             .typeText(this.openInvoicePhoneNumberInput, phoneNumber, {
                 replace: true,
@@ -360,11 +307,6 @@ export default class PaymentPage {
     changeCountry = async countryCode => {
         await t
             .click(this.user.checkoutPageUserCountrySelect)
-            .click(
-                this.user.checkoutPageUserCountrySelectOption.withAttribute(
-                    'value',
-                    countryCode
-                )
-            )
+            .click(this.user.checkoutPageUserCountrySelectOption.withAttribute('value', countryCode))
     }
 }

@@ -28,7 +28,7 @@
     "rollup": "^1.19.4",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-cleanup": "^3.1.1",
-    "testcafe": "^1.7.0"
+    "testcafe": "^0.23.3"
   },
   "scripts": {
     "build": "lerna run build",
@@ -43,7 +43,8 @@
     "postinstall": "lerna bootstrap",
     "lint": "eslint ./packages/**/*.js",
     "lint:fix": "eslint --fix ./packages/**/*.js",
-    "test:e2e": "testcafe"
+    "test:e2e": "testcafe chrome './e2e/tests' -e -q",
+    "test:e2e:headless": "testcafe chrome:headless './e2e/tests' -e -q"
   },
   "husky": {
     "hooks": {

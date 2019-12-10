@@ -25,34 +25,19 @@ fixture`Oracle frontend guest in user card payments`
     })
 
 test('Successful card payment without 3DS', async t => {
-    await paymentPage.doCardPayment(
-        'Attila test',
-        config.masterCardWithout3D,
-        config.expDate,
-        config.cvc
-    )
+    await paymentPage.doCardPayment('Attila test', config.masterCardWithout3D, config.expDate, config.cvc)
     await paymentPage.placeOrder()
     await paymentPage.expectSuccess()
 })
 
 test('Refused card payment without 3DS', async t => {
-    await paymentPage.doCardPayment(
-        'Attila test',
-        config.masterCardWithout3D,
-        config.wrongExpDate,
-        config.cvc
-    )
+    await paymentPage.doCardPayment('Attila test', config.masterCardWithout3D, config.wrongExpDate, config.cvc)
     await paymentPage.placeOrder()
     await paymentPage.expectRefusal()
 })
 
 test.skip('Successful card payment without 3DS explicitly checking for terms and conditions checkbox - prerequisite: custom terms and conditions needs to be enabled and set up on the magento admin', async t => {
-    await paymentPage.doCardPayment(
-        'Attila test',
-        config.masterCardWithout3D,
-        config.expDate,
-        config.cvc
-    )
+    await paymentPage.doCardPayment('Attila test', config.masterCardWithout3D, config.expDate, config.cvc)
 
     await t
         .expect(paymentPage.termsAndConditionsCheckbox.exists)
@@ -63,12 +48,7 @@ test.skip('Successful card payment without 3DS explicitly checking for terms and
 })
 
 test('Successful card payment with 3DS1', async t => {
-    await paymentPage.doCardPayment(
-        'Attila test',
-        config.visa3DS1,
-        config.expDate,
-        config.cvc
-    )
+    await paymentPage.doCardPayment('Attila test', config.visa3DS1, config.expDate, config.cvc)
     await paymentPage.placeOrder()
 
     const threeDSpaymentPage = new ThreeDSpaymentPage()
@@ -77,12 +57,7 @@ test('Successful card payment with 3DS1', async t => {
 })
 
 test('Refused card payment with 3DS', async t => {
-    await paymentPage.doCardPayment(
-        'Attila test',
-        config.visa3DS1,
-        config.expDate,
-        config.cvc
-    )
+    await paymentPage.doCardPayment('Attila test', config.visa3DS1, config.expDate, config.cvc)
     await paymentPage.placeOrder()
 
     const threeDSpaymentPage = new ThreeDSpaymentPage()
@@ -91,12 +66,7 @@ test('Refused card payment with 3DS', async t => {
 })
 
 test('Successful card payment with 3DS2', async t => {
-    await paymentPage.doCardPayment(
-        'Attila test',
-        config.masterCard3DS2,
-        config.expDate,
-        config.cvc
-    )
+    await paymentPage.doCardPayment('Attila test', config.masterCard3DS2, config.expDate, config.cvc)
     await paymentPage.placeOrder()
     await paymentPage.do3DS2Validation(config.threeDS2CorrectAnswer)
     await paymentPage.expectSuccess()
@@ -122,10 +92,7 @@ test.skip('Successful Klarna payment, using street line 2 for housenumber - prer
     await user.setUser('guestUserKlarna', true)
     await paymentPage.goToPaymentsPage()
 
-    await paymentPage.doKlarnaPayment(
-        'continue',
-        config.klarnaApprovedNLDateOfBirth
-    )
+    await paymentPage.doKlarnaPayment('continue', config.klarnaApprovedNLDateOfBirth)
     await paymentPage.expectSuccess()
 })
 
@@ -137,15 +104,11 @@ test.skip('Changing shipping country successfully refresh payment methods list',
     await user.setUser('guestUser')
     await paymentPage.goToPaymentsPage()
 
-    await t
-        .expect(paymentPage.iDealInput.exists)
-        .ok('iDeal did not appear, while it should.')
+    await t.expect(paymentPage.iDealInput.exists).ok('iDeal did not appear, while it should.')
 
     await paymentPage.goToShippingAddressPage()
     await paymentPage.changeCountry('HU')
     await paymentPage.goToPaymentsPage()
 
-    await t
-        .expect(paymentPage.iDealInput.exists)
-        .notOk("iDeal appeared, while it shouldn't")
+    await t.expect(paymentPage.iDealInput.exists).notOk("iDeal appeared, while it shouldn't")
 })
