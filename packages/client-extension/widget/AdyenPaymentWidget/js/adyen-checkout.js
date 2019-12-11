@@ -2,31 +2,27 @@ import pubsub from 'pubsub'
 import notifier from 'notifier'
 import $ from 'jquery'
 import { store } from './components'
-import { createSpinner, destroySpinner, eventEmitter } from './utils'
+import { createSpinner, destroySpinner, eventEmitter, hideLoaders } from './utils'
 import createError from './utils/createError'
 import * as constants from './constants'
 import { presentToShopper, setBoletoConfig } from './components'
 
-export class ViewModel {
+class ViewModel {
+    store = store
+
     setGatewaySettings = ({
         installmentsOptionsId,
         environment,
         storedPayment,
         boletoDeliveryDate,
         boletoShopperStatement,
-        paymentMethodTypes,
     }) => {
         eventEmitter.store.emit(constants.environment, environment)
 
-        store.get(constants.isAllowedCountryForInstallments) &&
-            this.setInstallments(installmentsOptionsId)
+        store.get(constants.isAllowedCountryForInstallments) && this.setInstallments(installmentsOptionsId)
         eventEmitter.store.emit(constants.storedPaymentType, storedPayment)
 
-        setBoletoConfig({
-            boletoDeliveryDate: Number(boletoDeliveryDate),
-            boletoShopperStatement,
-            paymentMethodTypes,
-        })
+        setBoletoConfig({ boletoDeliveryDate: Number(boletoDeliveryDate), boletoShopperStatement })
     }
 
     setSiteSettings = () => {
@@ -38,10 +34,7 @@ export class ViewModel {
 
     setInstallments = installmentsOptions => {
         try {
-            eventEmitter.store.emit(
-                constants.installmentsOptions,
-                JSON.parse(installmentsOptions)
-            )
+            eventEmitter.store.emit(constants.installmentsOptions, JSON.parse(installmentsOptions))
         } catch (e) {
             const translate = store.get(constants.translate)
             const { installmentsConfiguration } = constants.errorMessages
@@ -51,16 +44,13 @@ export class ViewModel {
     }
 
     setSiteCountryAndCurrency = () => {
-        const {
-            brazil: { currency, locale },
-        } = constants.countries
+        const { brazil } = constants.countries
+        const { currency, locale } = brazil
 
         const siteLocale = store.get(constants.locale).toLowerCase()
-        const currencyCode = this.cart()
-            .currencyCode()
-            .toLowerCase()
+        const currencyCode = this.cart().currencyCode()
         const localeIsBr = locale === siteLocale
-        const curIsBr = currencyCode === currency
+        const curIsBr = currencyCode.toLowerCase() === currency
 
         eventEmitter.store.emit(constants.brazilEnabled, localeIsBr && curIsBr)
     }
@@ -75,11 +65,10 @@ export class ViewModel {
     }
 
     onLoad = widget => {
-        Object.assign(this, widget)
         store.init(widget)
+        Object.assign(this, widget, { store })
 
         this.setSiteSettings()
-
         this.subscribeToTopics()
     }
 
@@ -87,25 +76,16 @@ export class ViewModel {
         eventEmitter.component.emit(constants.render)
     }
 
-    getStore = key => {
-        const hasKey = store.has(key)
-        return hasKey ? store.get(key) : undefined
-    }
-
     reset = () => {
-        eventEmitter.store.emit(constants.isSubmitting, false)
         eventEmitter.store.emit(constants.installments, [])
     }
 
-    orderSubmitted = () => {
-        if (store.has(constants.orderPayload)) {
-            const { resultCode, customPaymentProperties } = store.get(
-                constants.orderPayload
-            )
-            const isPresentToShopper = resultCode === constants.presentToShopper
-            isPresentToShopper && presentToShopper(customPaymentProperties)
-        }
+    presentToShopper = () => {
+        const { resultCode, customPaymentProperties } = store.get(constants.orderPayload)
+        const isPresentToShopper = resultCode === constants.presentToShopper
+        isPresentToShopper && presentToShopper(customPaymentProperties)
     }
+    orderSubmitted = () => store.has(constants.orderPayload) && this.presentToShopper()
 
     subscribeToTopics = () => {
         const {
@@ -116,6 +96,7 @@ export class ViewModel {
             ORDER_CREATED,
             PAGE_CHANGED,
             ORDER_SUBMISSION_SUCCESS,
+            NOTIFICATION_ADD,
         } = pubsub.topicNames
 
         const emitInitialOrder = ev => {
@@ -132,7 +113,10 @@ export class ViewModel {
         $.Topic(ORDER_CREATED).subscribe(this.reset)
         $.Topic(PAGE_CHANGED).subscribe(this.handlePageChanged)
         $.Topic(ORDER_SUBMISSION_SUCCESS).subscribe(this.orderSubmitted)
+
+        $.Topic(NOTIFICATION_ADD).subscribe(hideLoaders)
     }
 }
 
-export default new ViewModel()
+const vm = new ViewModel()
+export default vm

@@ -31,11 +31,6 @@
       "public": true,
       "options": [
         {
-          "id": "invoice",
-          "value": "invoice",
-          "labelResourceId": "invoiceLabel"
-        },
-        {
           "id": "generic",
           "value": "generic",
           "labelResourceId": "cardLabel"

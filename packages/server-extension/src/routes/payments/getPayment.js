@@ -52,19 +52,23 @@ export default async (req, res, next) => {
             const installments = numberOfInstallments && {
                 installments: { value: numberOfInstallments },
             }
-            const details = {
-                scheme: {
-                    enableRecurring: storedPayment.includes('recurring'),
-                    enableOneClick: storedPayment.includes('oneClick'),
-                    redirectToIssuerMethod: 'GET',
-                    redirectFromIssuerMethod: 'GET',
-                    shopperName: nameOnCard,
-                    returnUrl,
-                    ...installments,
-                    ...paymentDetailsJson,
-                },
-                boletobancario: paymentDetailsJson,
+
+            const defaultDetails = {
+                redirectFromIssuerMethod: 'GET',
+                redirectToIssuerMethod: 'GET',
+                returnUrl,
+                ...paymentDetailsJson,
             }
+
+            const scheme = {
+                enableRecurring: storedPayment.includes('recurring'),
+                enableOneClick: storedPayment.includes('oneClick'),
+                shopperName: nameOnCard,
+                ...installments,
+                ...defaultDetails,
+            }
+
+            const details = type === 'scheme' ? scheme : defaultDetails
 
             const paymentResponse = await checkout.payments(
                 {
@@ -91,7 +95,7 @@ export default async (req, res, next) => {
                     selectedBrand,
                     shopperEmail: profile.email,
                     shopperReference: profile.id,
-                    ...details[type],
+                    ...details,
                 },
                 { idempotencyKey: `${orderId}-${transactionId}` }
             )
@@ -106,12 +110,9 @@ export default async (req, res, next) => {
         const paymentResponse = await getPaymentResponse()
         const isSuccess = !('refusalReason' in paymentResponse)
 
-        const additionalProperties =
-            paymentResponse.action || paymentResponse.additionalData
+        const additionalProperties = paymentResponse.action || paymentResponse.additionalData
 
-        const merchantTransactionId =
-            paymentResponse.pspReference ||
-            `${merchantAccount}:${transactionId}`
+        const merchantTransactionId = paymentResponse.pspReference || `${merchantAccount}:${transactionId}`
 
         const response = {
             transactionType: req.body.transactionType,

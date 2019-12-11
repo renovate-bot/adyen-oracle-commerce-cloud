@@ -7,15 +7,12 @@ export const onBrand = ({ brand }) => {
     const installmentsOptions = store.get(constants.installmentsOptions)
     const cart = store.get(constants.cart)
     const amount = cart().amount()
-    const installments = installmentsOptions
-        ? getInstallmentOptions(installmentsOptions, amount, brand)
-        : []
+    const installments = installmentsOptions ? getInstallmentOptions(installmentsOptions, amount, brand) : []
 
     eventEmitter.store.emit(constants.installments, installments)
 }
 
-export const onConfigSuccess = () =>
-    eventEmitter.store.emit(constants.isLoaded, true)
+export const onConfigSuccess = () => eventEmitter.store.emit(constants.isLoaded, true)
 
 const createCardCheckout = () => {
     const checkout = new Checkout(constants.paymentMethodTypes.generic)
@@ -23,18 +20,10 @@ const createCardCheckout = () => {
     const onSubmit = checkout.onSubmit()
 
     const storedPaymentType = store.get(constants.storedPaymentType)
-    const options = {
-        hasHolderName: false,
-        enableStoreDetails: !!storedPaymentType(),
-    }
+    const options = { hasHolderName: false, enableStoreDetails: !!storedPaymentType() }
 
     const configuration = { onBrand, onConfigSuccess, onChange, onSubmit }
-    const checkoutOptions = {
-        configuration,
-        selector: '#adyen-card-payment',
-        type: 'card',
-        options,
-    }
+    const checkoutOptions = { configuration, selector: '#adyen-card-payment', type: 'card', options }
 
     checkout.createCheckout(checkoutOptions, checkout => {
         eventEmitter.store.emit(constants.checkout.card, checkout)

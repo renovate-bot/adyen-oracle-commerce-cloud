@@ -1,6 +1,4 @@
-import nock from 'nock'
 import Widget from '../../../../__mocks__/widget'
-import pubsub from '../../../../__mocks__/pubsub'
 import viewModel from '../adyen-checkout'
 import { Payment, store } from '../components'
 import { eventEmitter } from '../utils'

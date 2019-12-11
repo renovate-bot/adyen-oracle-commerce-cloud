@@ -29,15 +29,17 @@ class Checkout {
 
     createCheckout = ({ configuration, selector, type, options = {} }, cb) => {
         const defaultConfiguration = getDefaultConfig()
-        const checkout = new AdyenCheckout({
-            ...defaultConfiguration,
-            ...configuration,
-        })
+        // eslint-disable-next-line no-undef
+        const checkout = new AdyenCheckout({ ...defaultConfiguration, ...configuration })
         checkout.create(type, options).mount(selector)
+
         cb(checkout)
     }
 
-    onSubmit = options => (state, component) => {
+    onSubmit = () => () => {
+        const loader = document.querySelector(`#adyen-${this.type}-wrapper .loader-wrapper`)
+        loader && loader.classList.toggle('hide', false)
+
         const order = store.get(constants.order)
         eventEmitter.payment.emit(constants.setPayment, this.type)
 
@@ -51,10 +53,7 @@ class Checkout {
         const isValid = component.isValid && typeof state.data === 'object'
         eventEmitter.store.emit(constants.isValid, isValid)
 
-        const payload = {
-            ...paymentDetails,
-            [this.type]: { ...state.data, ...options },
-        }
+        const payload = { ...paymentDetails, [this.type]: { ...state.data, ...options } }
 
         eventEmitter.store.emit(constants.paymentDetails, payload)
     }

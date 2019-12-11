@@ -8,9 +8,12 @@ export const errorMessages = {
 export const paymentMethodTypes = {
     generic: 'generic',
     invoice: 'invoice',
+    local: 'local',
 }
-export const adyenCheckoutComponentUrl =
-    'https://checkoutshopper-live.adyen.com/checkoutshopper/sdk/3.3.0/adyen.js'
+export const adyenUrl = env => `https://checkoutshopper-${env.toLowerCase()}.adyen.com`
+export const adyenCssUrl = env => `${adyenUrl(env)}/checkoutshopper/sdk/3.3.0/adyen.css`
+export const adyenCheckoutComponentUrl = env => `${adyenUrl(env)}/checkoutshopper/sdk/3.3.0/adyen.js`
+
 export const locale = 'locale'
 export const countries = {
     brazil: { locale: 'pt_br', currency: 'brl' },
@@ -18,7 +21,7 @@ export const countries = {
 }
 export const brazilEnabled = 'brazilEnabled'
 export const comboCards = { debit: 'debitCard', credit: 'creditCard' }
-export const bins = { electron: 'electron' }
+export const bins = { electron: 'electron', maestro: 'maestro' }
 export const storage = { paymentData: 'AdyenPaymentData', order: 'AdyenOrder' }
 export const noInstallmentsMsg = 'noInstallmentsMsg'
 
@@ -28,6 +31,7 @@ export const order = 'order'
 export const checkout = {
     card: 'checkoutCard',
     boleto: 'checkoutBoleto',
+    local: 'checkoutLocal',
 }
 export const isLoaded = 'isLoaded'
 export const ajax = 'ajax'
@@ -54,7 +58,6 @@ export const comboCardOptions = 'comboCardOptions'
 export const genericPayment = 'genericPayment'
 export const isDone = 'isDone'
 export const isValid = 'isValid'
-export const isSubmitting = 'isSubmitting'
 export const pageParams = 'pageParams'
 export const presentToShopper = 'PresentToShopper'
 export const orderPayload = 'orderPayload'
@@ -63,3 +66,4 @@ export const boleto = {
     deliveryDate: 'boletoDeliveryDate',
     shopperStatement: 'boletoShopperStatement',
 }
+export const localPaymentMethods = 'localPaymentMethods'
