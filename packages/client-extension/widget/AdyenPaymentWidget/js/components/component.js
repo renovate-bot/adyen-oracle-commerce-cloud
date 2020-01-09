@@ -20,7 +20,8 @@ class Component {
     }
 
     getComboCardOptions = () => {
-        const brands = { visa: constants.bins.electron, mc: constants.bins.maestro }
+        const { electron, maestro, elodebit } = constants.bins
+        const brands = { visa: electron, mc: maestro, elo: elodebit }
         const selectedComboCard = store.get(constants.selectedComboCard)()
         const isDebitCard = selectedComboCard === constants.comboCards.debit
         const brand = store.get(constants.selectedBrand)
