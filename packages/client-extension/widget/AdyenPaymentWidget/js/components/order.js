@@ -3,7 +3,7 @@ import ccRestClient from 'ccRestClient'
 import ccConstants from 'ccConstants'
 import storageApi from 'storageApi'
 import pubsub from 'pubsub'
-import { redirectAuth, createSpinner, getOrderPayload, eventEmitter } from '../utils'
+import { createSpinner, eventEmitter, getOrderPayload, redirectAuth } from '../utils'
 import * as constants from '../constants'
 import { store } from './index'
 
@@ -114,8 +114,7 @@ class Order {
     hasParameters = parametersObj => {
         const is3DS = this.checkIf3ds(parametersObj)
         const isLocal = this.checkIfLocal(parametersObj)
-        const hasDetails = is3DS || isLocal
-        return hasDetails
+        return is3DS || isLocal
     }
 }
 

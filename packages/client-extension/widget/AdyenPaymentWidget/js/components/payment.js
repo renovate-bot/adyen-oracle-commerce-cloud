@@ -83,9 +83,7 @@ class Payment {
             ...(numberOfInstallments && { numberOfInstallments }),
             ...comboCardOptions,
         }
-        const updatedGenericPayment = { ...genericPayment, customProperties }
-
-        return updatedGenericPayment
+        return { ...genericPayment, customProperties }
     }
 
     checkSelectedInstallment = selectedInstallment =>

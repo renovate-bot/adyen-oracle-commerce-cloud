@@ -19,5 +19,9 @@ export default function getOrderPayload(order) {
         },
         shippingMethod,
         shoppingCart,
+        pspReference: 'Here comes a PSP Reference!',
+        dynamicPropertyPspReference: 'Here comes a PSP Reference!',
+        paymentMethod: 'Here comes a Payment Method!',
+        dynamicPropertyPaymentMethod: 'Here comes a Payment Method!',
     }
 }

@@ -2,6 +2,8 @@ import validateWebHookPayloadSignature from '../helpers/webhookSignatureValidati
 
 function validateWebhookHeaders(req, res, next) {
     const logger = req.app.locals.logger
+    logger.info(':::HOST', req.hostname)
+    logger.info(':::HEADERS', req.headers)
     if (req.hostname !== 'localhost') {
         if (req.headers['x-oracle-cc-webhook-signature']) {
             validateWebHookPayloadSignature(req)

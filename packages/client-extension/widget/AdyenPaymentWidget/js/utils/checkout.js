@@ -30,10 +30,18 @@ class Checkout {
     createCheckout = ({ configuration, selector, type, options = {} }, cb) => {
         const defaultConfiguration = getDefaultConfig()
         // eslint-disable-next-line no-undef
-        const checkout = new AdyenCheckout({ ...defaultConfiguration, ...configuration })
+        const checkout = new AdyenCheckout({
+            ...defaultConfiguration,
+            ...configuration,
+            onAdditionalDetails: this.onAdditionalDetails,
+        })
         checkout.create(type, options).mount(selector)
 
         cb(checkout)
+    }
+
+    onAdditionalDetails = (state, component) => {
+        console.log('addionalDetails', { state, component })
     }
 
     onSubmit = () => () => {

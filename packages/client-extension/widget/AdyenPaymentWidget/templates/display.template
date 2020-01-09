@@ -95,7 +95,7 @@
             </div>
             <div style="font-weight: bold; font-size: 16px;">Processing...</div>
         </div>
-        <div id="adyen-boleto-payment" class="adyen-component"></div>
+        <div id="adyen-boletobancario-payment" class="adyen-component"></div>
     </div>
     <!-- /ko -->
     <!-- ko foreach: store.localPaymentMethods() -->

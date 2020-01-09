@@ -55,7 +55,7 @@ const createBoletoCheckout = ({ paymentMethods }) => {
         }
 
         const showEmailAddress = true
-        const options = { showEmailAddress, data: { shopperName, billingAddress } }
+        const options = { showEmailAddress, data: { billingAddress, ...shopperName } }
         const checkoutOptions = { configuration, selector: `#adyen-${type}-payment`, type, options }
 
         checkout.createCheckout(checkoutOptions, setComponent)
