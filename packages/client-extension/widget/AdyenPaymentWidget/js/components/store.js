@@ -38,6 +38,7 @@ class Store {
 
     // Card
     scheme = ko.observable(false)
+    storedPaymentMethods = ko.observableArray([])
 
     // Payment
     paymentComponent = new Payment()
@@ -84,6 +85,7 @@ class Store {
         this.id = viewModel.id
         this.order = viewModel.order
         this.cart = viewModel.cart
+        this.user = viewModel.user
         this.ajax = ajax(viewModel.isPreview())
         this.translate = viewModel.translate
         this.locale = viewModel.locale()

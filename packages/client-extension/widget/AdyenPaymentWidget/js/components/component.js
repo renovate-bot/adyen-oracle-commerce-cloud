@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import * as constants from '../constants'
 import { eventEmitter } from '../utils'
-import { createBoletoCheckout, createCardCheckout, createLocalPaymentCheckout, store } from './index'
+import { createBoletoCheckout, createCardCheckout, createStoredCards, createLocalPaymentCheckout, store } from './index'
 
 class Component {
     constructor() {
@@ -35,12 +35,13 @@ class Component {
     getOriginKeysSuccessResponse = originKeysRes => {
         const { origin } = window.location
         const cart = store.get(constants.cart)
+        const user = store.get(constants.user)
         const { amount, currencyCode } = cart()
 
         eventEmitter.store.emit(constants.originKey, originKeysRes.originKeys[origin])
         store.get(constants.ajax)('paymentMethods', this.getPaymentMethods, {
             method: 'post',
-            body: { amount: { currency: currencyCode(), value: amount() } },
+            body: { amount: { currency: currencyCode(), value: amount() }, shopperReference: user().id() },
         })
     }
 
@@ -53,18 +54,22 @@ class Component {
         store.get(constants.ajax)('originKeys', this.getOriginKeysSuccessResponse)
     }
 
-    getPaymentMethods = paymentMethodsResponse => {
-        eventEmitter.store.emit(constants.paymentMethodsResponse, paymentMethodsResponse)
+    importAdyenCheckout = paymentMethodsResponse => {
         const environment = store.get(constants.environment)
         const url = constants.adyenCheckoutComponentUrl(environment)
 
-        const createComponents = () => {
+        import(url).then(module => {
+            window.AdyenCheckout = module.default
             createCardCheckout(paymentMethodsResponse)
+            createStoredCards()
             createLocalPaymentCheckout(paymentMethodsResponse)
             createBoletoCheckout(paymentMethodsResponse)
-        }
+        })
+    }
 
-        $.getScript(url, createComponents)
+    getPaymentMethods = paymentMethodsResponse => {
+        eventEmitter.store.emit(constants.paymentMethodsResponse, paymentMethodsResponse)
+        this.importAdyenCheckout(paymentMethodsResponse)
     }
 }
 

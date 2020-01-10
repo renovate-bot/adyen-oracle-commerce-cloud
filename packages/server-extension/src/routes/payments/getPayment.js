@@ -55,6 +55,7 @@ export default async (req, res, next) => {
 
             const paymentMethod = { type, ...paymentMethodRest }
             const defaultDetails = {
+                ...paymentDetailsJson,
                 redirectFromIssuerMethod: 'GET',
                 redirectToIssuerMethod: 'GET',
                 returnUrl,
@@ -89,9 +90,6 @@ export default async (req, res, next) => {
                             version: '', // TODO: create static file with version num
                             name: 'adyen-oracle-commerce-cloud',
                         },
-                    },
-                    browserInfo: {
-                        userAgent: userAgent.ua,
                     },
                     reference: transactionId,
                     selectedBrand,

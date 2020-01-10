@@ -25,19 +25,32 @@ export const createFromAction = ({ action, selector, checkoutComponent }) => {
 class Checkout {
     constructor(type) {
         this.type = type
+        this.checkout = undefined
     }
 
+    // eslint-disable-next-line no-undef
+    getCheckout = configuration => this.checkout || new AdyenCheckout({ ...getDefaultConfig(), ...configuration })
     createCheckout = ({ configuration, selector, type, options = {} }, cb) => {
-        const defaultConfiguration = getDefaultConfig()
-        // eslint-disable-next-line no-undef
-        const checkout = new AdyenCheckout({ ...defaultConfiguration, ...configuration })
+        const checkout = this.getCheckout(configuration)
         checkout.create(type, options).mount(selector)
 
-        cb(checkout)
+        cb && cb(checkout)
+    }
+
+    createStoredCardCheckout = cb => {
+        const configuration = { onChange: this.onChange(), onSubmit: this.onSubmit() }
+        const checkout = this.getCheckout(configuration)
+        eventEmitter.store.emit(constants.storedPaymentMethods, checkout.paymentMethodsResponse.storedPaymentMethods)
+        checkout.paymentMethodsResponse.storedPaymentMethods.forEach(storedPaymentMethod => {
+            const selector = `#adyen-stored_${storedPaymentMethod.id}-payment`
+            checkout.create(constants.card, storedPaymentMethod).mount(selector)
+        })
+
+        cb && cb(checkout)
     }
 
     onSubmit = () => () => {
-        const loader = document.querySelector(`#adyen-${this.type}-wrapper .loader-wrapper`)
+        const loader = document.querySelector(`.loader-wrapper`)
         loader && loader.classList.toggle('hide', false)
 
         const order = store.get(constants.order)

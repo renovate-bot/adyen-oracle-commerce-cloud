@@ -1,16 +1,37 @@
+<div class="loader-wrapper hide">
+    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+    <div style="font-weight: bold; font-size: 16px;">Processing...</div>
+</div>
+
+<legend data-bind="widgetLocaleText: 'storedPaymentMethods'"></legend>
+<div class="adyen-collapse-heading oc-panel panel-2" data-oc-id="panel-2">
+    <!-- ko foreach: store.storedPaymentMethods() -->
+    <div class="collapse-heading">
+        <strong>
+        <span
+                class="collapse-toggle collapsed"
+                data-toggle="collapse"
+                data-bind="attr: { 'data-target': '#adyen-stored_' + $data.id + '-wrapper' }"
+        >
+            <button data-bind="text: 'Card ending with ' + $data.lastFour"></button>
+        </span>
+        </strong>
+    </div>
+    <div class="adyen-wrapper collapse" data-bind="attr: { id: 'adyen-stored_' + $data.id + '-wrapper' }">
+        <div class="adyen-component" data-bind="attr: { id: 'adyen-stored_' + $data.id + '-payment' }"></div>
+    </div>
+    <!-- /ko -->
+</div>
+<br />
 <legend data-bind="widgetLocaleText: 'paymentDetails'"></legend>
 
-<div id="adyen-collapse-heading" class="oc-panel panel-1" data-oc-id="panel-1" data-bind="onRender: onRender">
+<div class="adyen-collapse-heading oc-panel panel-1" data-oc-id="panel-1" data-bind="onRender: onRender">
     <!-- ko if : store.scheme() -->
     <div class="collapse-heading">
         <strong> <span class="collapse-toggle collapsed" data-toggle="collapse" data-target="#adyen-scheme-wrapper"><button
                 data-bind="widgetLocaleText:'payWithCard'"></button></span></strong>
     </div>
     <div id="adyen-scheme-wrapper" class="adyen-wrapper collapse">
-        <div class="loader-wrapper hide">
-            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            <div style="font-weight: bold; font-size: 16px;">Processing...</div>
-        </div>
         <div id="adyen-card-payment" class="adyen-component">
         <!-- ko if : store.isLoaded() -->
             <!-- ko if : store.brazilEnabled -->
@@ -86,15 +107,6 @@
         </strong>
     </div>
     <div id="adyen-boletobancario-wrapper" class="adyen-wrapper collapse">
-        <div class="loader-wrapper hide">
-            <div class="lds-ring">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-            <div style="font-weight: bold; font-size: 16px;">Processing...</div>
-        </div>
         <div id="adyen-boleto-payment" class="adyen-component"></div>
     </div>
     <!-- /ko -->
@@ -110,10 +122,6 @@
             </span>
         </strong>
         <div class="adyen-wrapper collapse" data-bind="attr: { id: 'adyen-' + $data.type + '-wrapper' }">
-            <div class="loader-wrapper hide">
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-                <div style="font-weight: bold; font-size: 16px;">Processing...</div>
-            </div>
             <div class="adyen-component" data-bind="attr: { id: 'adyen-' + $data.type + '-payment' }"></div>
         </div>
     </div>

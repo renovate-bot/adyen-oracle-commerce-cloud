@@ -3,11 +3,33 @@
 exports[`Local should render 1`] = `
 Object {
   Symbol(dom): <body>
+    <div
+      class="loader-wrapper hide"
+    >
+      <div
+        class="lds-ring"
+      >
+        <div />
+        <div />
+        <div />
+        <div />
+      </div>
+      <div
+        style="font-weight: bold; font-size: 16px;"
+      >
+        Processing...
+      </div>
+    </div>
     <legend />
     <div
-      class="oc-panel panel-1"
+      class="adyen-collapse-heading oc-panel panel-2"
+      data-oc-id="panel-2"
+    />
+    <br />
+    <legend />
+    <div
+      class="adyen-collapse-heading oc-panel panel-1"
       data-oc-id="panel-1"
-      id="adyen-collapse-heading"
     >
       <div
         class="collapse-heading"
@@ -27,23 +49,6 @@ Object {
           class="adyen-wrapper collapse"
           id="adyen-directEbanking-wrapper"
         >
-          <div
-            class="loader-wrapper hide"
-          >
-            <div
-              class="lds-ring"
-            >
-              <div />
-              <div />
-              <div />
-              <div />
-            </div>
-            <div
-              style="font-weight: bold; font-size: 16px;"
-            >
-              Processing...
-            </div>
-          </div>
           <div
             class="adyen-component"
             id="adyen-directEbanking-payment"
@@ -69,23 +74,6 @@ Object {
           id="adyen-dotpay-wrapper"
         >
           <div
-            class="loader-wrapper hide"
-          >
-            <div
-              class="lds-ring"
-            >
-              <div />
-              <div />
-              <div />
-              <div />
-            </div>
-            <div
-              style="font-weight: bold; font-size: 16px;"
-            >
-              Processing...
-            </div>
-          </div>
-          <div
             class="adyen-component"
             id="adyen-dotpay-payment"
           />
@@ -109,23 +97,6 @@ Object {
           class="adyen-wrapper collapse"
           id="adyen-entercash-wrapper"
         >
-          <div
-            class="loader-wrapper hide"
-          >
-            <div
-              class="lds-ring"
-            >
-              <div />
-              <div />
-              <div />
-              <div />
-            </div>
-            <div
-              style="font-weight: bold; font-size: 16px;"
-            >
-              Processing...
-            </div>
-          </div>
           <div
             class="adyen-component"
             id="adyen-entercash-payment"
@@ -151,23 +122,6 @@ Object {
           id="adyen-eps-wrapper"
         >
           <div
-            class="loader-wrapper hide"
-          >
-            <div
-              class="lds-ring"
-            >
-              <div />
-              <div />
-              <div />
-              <div />
-            </div>
-            <div
-              style="font-weight: bold; font-size: 16px;"
-            >
-              Processing...
-            </div>
-          </div>
-          <div
             class="adyen-component"
             id="adyen-eps-payment"
           />
@@ -191,23 +145,6 @@ Object {
           class="adyen-wrapper collapse"
           id="adyen-ideal-wrapper"
         >
-          <div
-            class="loader-wrapper hide"
-          >
-            <div
-              class="lds-ring"
-            >
-              <div />
-              <div />
-              <div />
-              <div />
-            </div>
-            <div
-              style="font-weight: bold; font-size: 16px;"
-            >
-              Processing...
-            </div>
-          </div>
           <div
             class="adyen-component"
             id="adyen-ideal-payment"
@@ -233,23 +170,6 @@ Object {
           id="adyen-interac-wrapper"
         >
           <div
-            class="loader-wrapper hide"
-          >
-            <div
-              class="lds-ring"
-            >
-              <div />
-              <div />
-              <div />
-              <div />
-            </div>
-            <div
-              style="font-weight: bold; font-size: 16px;"
-            >
-              Processing...
-            </div>
-          </div>
-          <div
             class="adyen-component"
             id="adyen-interac-payment"
           />
@@ -273,23 +193,6 @@ Object {
           class="adyen-wrapper collapse"
           id="adyen-klarna-wrapper"
         >
-          <div
-            class="loader-wrapper hide"
-          >
-            <div
-              class="lds-ring"
-            >
-              <div />
-              <div />
-              <div />
-              <div />
-            </div>
-            <div
-              style="font-weight: bold; font-size: 16px;"
-            >
-              Processing...
-            </div>
-          </div>
           <div
             class="adyen-component"
             id="adyen-klarna-payment"
@@ -315,23 +218,6 @@ Object {
           id="adyen-klarna_account-wrapper"
         >
           <div
-            class="loader-wrapper hide"
-          >
-            <div
-              class="lds-ring"
-            >
-              <div />
-              <div />
-              <div />
-              <div />
-            </div>
-            <div
-              style="font-weight: bold; font-size: 16px;"
-            >
-              Processing...
-            </div>
-          </div>
-          <div
             class="adyen-component"
             id="adyen-klarna_account-payment"
           />
@@ -355,23 +241,6 @@ Object {
           class="adyen-wrapper collapse"
           id="adyen-klarna_paynow-wrapper"
         >
-          <div
-            class="loader-wrapper hide"
-          >
-            <div
-              class="lds-ring"
-            >
-              <div />
-              <div />
-              <div />
-              <div />
-            </div>
-            <div
-              style="font-weight: bold; font-size: 16px;"
-            >
-              Processing...
-            </div>
-          </div>
           <div
             class="adyen-component"
             id="adyen-klarna_paynow-payment"
@@ -397,23 +266,6 @@ Object {
           id="adyen-molpay_cash-wrapper"
         >
           <div
-            class="loader-wrapper hide"
-          >
-            <div
-              class="lds-ring"
-            >
-              <div />
-              <div />
-              <div />
-              <div />
-            </div>
-            <div
-              style="font-weight: bold; font-size: 16px;"
-            >
-              Processing...
-            </div>
-          </div>
-          <div
             class="adyen-component"
             id="adyen-molpay_cash-payment"
           />
@@ -437,23 +289,6 @@ Object {
           class="adyen-wrapper collapse"
           id="adyen-molpay_epay-wrapper"
         >
-          <div
-            class="loader-wrapper hide"
-          >
-            <div
-              class="lds-ring"
-            >
-              <div />
-              <div />
-              <div />
-              <div />
-            </div>
-            <div
-              style="font-weight: bold; font-size: 16px;"
-            >
-              Processing...
-            </div>
-          </div>
           <div
             class="adyen-component"
             id="adyen-molpay_epay-payment"
@@ -479,23 +314,6 @@ Object {
           id="adyen-multibanco-wrapper"
         >
           <div
-            class="loader-wrapper hide"
-          >
-            <div
-              class="lds-ring"
-            >
-              <div />
-              <div />
-              <div />
-              <div />
-            </div>
-            <div
-              style="font-weight: bold; font-size: 16px;"
-            >
-              Processing...
-            </div>
-          </div>
-          <div
             class="adyen-component"
             id="adyen-multibanco-payment"
           />
@@ -519,23 +337,6 @@ Object {
           class="adyen-wrapper collapse"
           id="adyen-openbanking_UK-wrapper"
         >
-          <div
-            class="loader-wrapper hide"
-          >
-            <div
-              class="lds-ring"
-            >
-              <div />
-              <div />
-              <div />
-              <div />
-            </div>
-            <div
-              style="font-weight: bold; font-size: 16px;"
-            >
-              Processing...
-            </div>
-          </div>
           <div
             class="adyen-component"
             id="adyen-openbanking_UK-payment"
@@ -561,23 +362,6 @@ Object {
           id="adyen-paysafecard-wrapper"
         >
           <div
-            class="loader-wrapper hide"
-          >
-            <div
-              class="lds-ring"
-            >
-              <div />
-              <div />
-              <div />
-              <div />
-            </div>
-            <div
-              style="font-weight: bold; font-size: 16px;"
-            >
-              Processing...
-            </div>
-          </div>
-          <div
             class="adyen-component"
             id="adyen-paysafecard-payment"
           />
@@ -602,23 +386,6 @@ Object {
           id="adyen-unionpay-wrapper"
         >
           <div
-            class="loader-wrapper hide"
-          >
-            <div
-              class="lds-ring"
-            >
-              <div />
-              <div />
-              <div />
-              <div />
-            </div>
-            <div
-              style="font-weight: bold; font-size: 16px;"
-            >
-              Processing...
-            </div>
-          </div>
-          <div
             class="adyen-component"
             id="adyen-unionpay-payment"
           />
@@ -642,23 +409,6 @@ Object {
           class="adyen-wrapper collapse"
           id="adyen-wechatpayQR-wrapper"
         >
-          <div
-            class="loader-wrapper hide"
-          >
-            <div
-              class="lds-ring"
-            >
-              <div />
-              <div />
-              <div />
-              <div />
-            </div>
-            <div
-              style="font-weight: bold; font-size: 16px;"
-            >
-              Processing...
-            </div>
-          </div>
           <div
             class="adyen-component"
             id="adyen-wechatpayQR-payment"
