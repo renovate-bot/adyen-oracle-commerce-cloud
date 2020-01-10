@@ -56,7 +56,7 @@ class Checkout {
         const order = store.get(constants.order)
         eventEmitter.payment.emit(constants.setPayment, this.type)
 
-        order().id(null)
+        // order().id(null)
         order().op(ccConstants.ORDER_OP_INITIATE)
         order().handlePlaceOrder()
     }

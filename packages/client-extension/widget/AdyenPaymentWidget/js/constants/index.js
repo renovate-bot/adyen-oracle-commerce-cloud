@@ -11,8 +11,8 @@ export const paymentMethodTypes = {
     local: 'local',
 }
 export const adyenUrl = env => `https://checkoutshopper-${env.toLowerCase()}.adyen.com`
-export const adyenCssUrl = env => `${adyenUrl(env)}/checkoutshopper/sdk/3.5.0/adyen.css`
-export const adyenCheckoutComponentUrl = env => `${adyenUrl(env)}/checkoutshopper/sdk/3.5.0/adyen.js`
+export const adyenCssUrl = env => `${adyenUrl(env)}/checkoutshopper/sdk/3.4.0/adyen.css`
+export const adyenCheckoutComponentUrl = env => `${adyenUrl(env)}/checkoutshopper/sdk/3.4.0/adyen.js`
 
 export const locale = 'locale'
 export const countries = {

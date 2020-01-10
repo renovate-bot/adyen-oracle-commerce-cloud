@@ -9,7 +9,7 @@ export default async (req, res, next) => {
 
     try {
         const getPaymentResponse = async () => {
-            const key = `__express__d${customProperties.orderId}`
+            const key = `__express__d${customProperties.orderId || details.orderId}`
             const cachedResponse = mcache.get(key)
             if (cachedResponse) {
                 return cachedResponse
