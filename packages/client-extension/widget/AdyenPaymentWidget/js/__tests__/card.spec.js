@@ -6,7 +6,7 @@ import paymentMethodsResponseMock from '../../../../__mocks__/paymentMethods'
 jest.mock('../utils/checkout')
 jest.mock('../utils/getInstallmentOptions')
 import { Checkout, eventEmitter, getInstallmentOptions } from '../utils'
-import { createCardCheckout, store } from '../components'
+import { createCardCheckout, createStoredCards, store } from '../components'
 import { onBrand } from '../components/card'
 import generateTemplate from '../utils/tests/koTemplate'
 
@@ -25,6 +25,17 @@ describe('Card', () => {
 
         createCardCheckout(paymentMethodsResponseMock)
         expect(Checkout.prototype.createCheckout).toHaveBeenCalled()
+    })
+
+    it('should create stored cards checkout', function() {
+        viewModel.onLoad(widget)
+
+        Checkout.prototype.createStoredCardCheckout = jest.fn()
+        Checkout.prototype.onChange = jest.fn()
+        Checkout.prototype.onSubmit = jest.fn()
+
+        createStoredCards()
+        expect(Checkout.prototype.createStoredCardCheckout).toHaveBeenCalled()
     })
 
     it('should set brand', function() {
@@ -71,6 +82,15 @@ describe('Card', () => {
 
         const template = generateTemplate(widget, () => {
             eventEmitter.store.emit(constants.installments, [])
+            eventEmitter.store.emit(constants.isLoaded, true)
+        })
+        expect(template).toMatchSnapshot()
+    })
+
+    it('should display stored cards', function() {
+        const template = generateTemplate(widget, () => {
+            const storedPaymentMethods = [{ brand:"visa", expiryMonth:"10", expiryYear:"2020", holderName:"Checkout Shopper PlaceHolder", id:"8415785841327892", lastFour:"1111", name:"VISA", supportedShopperInteractions:["Ecommerce","ContAuth"], type:"scheme"}]
+            eventEmitter.store.emit(constants.storedPaymentMethods, storedPaymentMethods)
             eventEmitter.store.emit(constants.isLoaded, true)
         })
         expect(template).toMatchSnapshot()

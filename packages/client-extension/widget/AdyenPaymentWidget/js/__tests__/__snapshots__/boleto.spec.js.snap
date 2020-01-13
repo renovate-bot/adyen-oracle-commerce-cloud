@@ -3,11 +3,33 @@
 exports[`Boleto should display boleto component 1`] = `
 Object {
   Symbol(dom): <body>
+    <div
+      class="loader-wrapper hide"
+    >
+      <div
+        class="lds-ring"
+      >
+        <div />
+        <div />
+        <div />
+        <div />
+      </div>
+      <div
+        style="font-weight: bold; font-size: 16px;"
+      >
+        Processing...
+      </div>
+    </div>
     <legend />
     <div
-      class="oc-panel panel-1"
+      class="adyen-collapse-heading oc-panel panel-2"
+      data-oc-id="panel-2"
+    />
+    <br />
+    <legend />
+    <div
+      class="adyen-collapse-heading oc-panel panel-1"
       data-oc-id="panel-1"
-      id="adyen-collapse-heading"
     >
       <div
         class="collapse-heading"
@@ -26,23 +48,6 @@ Object {
         class="adyen-wrapper collapse"
         id="adyen-boletobancario-wrapper"
       >
-        <div
-          class="loader-wrapper hide"
-        >
-          <div
-            class="lds-ring"
-          >
-            <div />
-            <div />
-            <div />
-            <div />
-          </div>
-          <div
-            style="font-weight: bold; font-size: 16px;"
-          >
-            Processing...
-          </div>
-        </div>
         <div
           class="adyen-component"
           id="adyen-boleto-payment"

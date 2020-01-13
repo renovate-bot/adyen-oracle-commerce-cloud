@@ -32,27 +32,23 @@ describe('Component', () => {
     })
 
     it('should fetch origin key, payment methods and adyen checkout script', async done => {
-        widget.setLocale('pt_BR')
-        widget.setCurrencyCode('BRL')
-        viewModel.onLoad(widget)
-        const component = new Component()
-
         const scope = nock('http://localhost/ccstorex/custom/adyen/v1')
             .get('/originKeys')
             .reply(200, originKeysResponseMock)
             .post('/paymentMethods')
             .reply(200, paymentMethodsResponseMock)
 
-        const getScriptCb = () => {
+        widget.setLocale('pt_BR')
+        widget.setCurrencyCode('BRL')
+        viewModel.onLoad(widget)
+
+        const component = new Component()
+        component.importAdyenCheckout = jest.fn(paymentMethodsResponse => {
             const paymentMethods = store.get(constants.paymentMethodsResponse)
-            expect(paymentMethods).toEqual(paymentMethods)
+            expect(paymentMethodsResponse).toEqual(paymentMethods)
             expect(scope.isDone()).toBeTruthy()
             done()
-        }
-
-        nock('https://checkoutshopper-test.adyen.com')
-            .get('/checkoutshopper/sdk/3.3.0/adyen.js')
-            .reply(200, getScriptCb)
+        })
 
         component.render()
     })

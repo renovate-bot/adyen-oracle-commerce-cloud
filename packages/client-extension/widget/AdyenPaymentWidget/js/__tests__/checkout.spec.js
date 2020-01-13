@@ -62,6 +62,24 @@ describe('Checkout', () => {
         expect(cb).toHaveBeenCalled()
     })
 
+    it('should create stored payments checkout', function() {
+        eventEmitter.store.emit(constants.environment, 'TEST');
+
+        const cb = jest.fn()
+        const mount = jest.fn()
+        const create = jest.fn(() => ({ mount }))
+        const paymentMethod = { id: 1 }
+        global.AdyenCheckout = jest.fn(() => ({ create, paymentMethodsResponse: { storedPaymentMethods: [ paymentMethod ] }}))
+        const checkout = new Checkout(constants.paymentMethodTypes.scheme)
+        const type = 'card'
+        checkout.createStoredCardCheckout(cb)
+
+        expect(create).toHaveBeenCalledWith(type, paymentMethod)
+        expect(mount).toHaveBeenCalledWith(`#adyen-stored_${paymentMethod.id}-payment`)
+        expect(global.AdyenCheckout).toHaveBeenCalled()
+        expect(cb).toHaveBeenCalled()
+    })
+
     it('should handle on submit', function() {
         eventEmitter.store.emit(constants.paymentDetails, { scheme: {} })
         const checkout = new Checkout(constants.paymentMethodTypes.scheme)
@@ -69,7 +87,6 @@ describe('Checkout', () => {
         createOnSubmit()
 
         const order = store.get(constants.order)
-        expect(order().id()).toEqual(null)
         expect(order().op()).toEqual(ccConstants.ORDER_OP_INITIATE)
         expect(order().handlePlaceOrder).toHaveBeenCalled()
     })

@@ -1,6 +1,5 @@
 const hideLoaders = () => {
-    const toggleElementAttribute = el => el.classList.toggle('hide', true)
-    document.querySelectorAll('.loader-wrapper').forEach(toggleElementAttribute)
+    document.querySelector('.loader-wrapper').classList.toggle('hide', true)
 }
 
 export default hideLoaders
