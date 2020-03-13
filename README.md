@@ -13,6 +13,7 @@ URL=YOUR_OCC_ADMIN_SITE_ADDRESS   # URL=https://ccadmin-abcde.oracleoutsourcing.
 EXTENSION_NAME=ANY_NAME           # EXTENSION_NAME="Adyen Plugin"
 ```
 ## Installation
+Run `$ npm install`  or `$ yarn` to install all dependencies
 > _You can find the scripts to zip and deploy the client/server inside the `scripts` folder_
 ### Server Extension
 Run `$ npm run deploy:server`  or `$ yarn run deploy:server`
