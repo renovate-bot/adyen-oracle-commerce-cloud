@@ -1,7 +1,7 @@
 import getCheckout from '../../utils/checkout'
 import nconf from 'nconf/lib/nconf'
 import mcache from 'memory-cache'
-import pkgJson from '../../../package'
+import pkgJson from '../../../package.json'
 
 export default async (req, res, next) => {
     const pkgJson = require('../../../package')
