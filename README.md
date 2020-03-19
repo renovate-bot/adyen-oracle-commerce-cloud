@@ -5,7 +5,7 @@
 ## Requirements
 Node.js (min. v8.1.1) with package manager (NPM or Yarn)
 ## First steps
-Create a `occ.config` file inside the `scripts` folder with the following format:
+Edit the `occ.config` file inside the `scripts` with your credentials:
 ```bash
 USERNAME=YOUR_OCC_ADMIN_USERNAME  # USERNAME=john.doe@example.com
 PASSWORD=YOUR_OCC_ADMIN_PASSWORD  # PASSWORD=abcd1234
