@@ -10,7 +10,16 @@ archive.pipe(output)
 
 archive.file(path.join(clientPath, 'ext.json'), { name: 'ext.json' })
 archive.directory(path.join(clientPath, 'gateway'), 'gateway')
-archive.directory(path.join(clientPath, 'widget'), 'widget')
+// archive.directory(, 'widget')
+archive.glob('widget/**/*', {
+    cwd: clientPath,
+    ignore: [
+        'widget/AdyenPaymentWidget/js/adyen-checkout.js',
+        'widget/AdyenPaymentWidget/js/components/**',
+        'widget/AdyenPaymentWidget/js/utils/**',
+        'widget/AdyenPaymentWidget/js/constants/**',
+        'widget/AdyenPaymentWidget/js/__tests__/**',
+    ],
+})
 
 archive.finalize()
-
