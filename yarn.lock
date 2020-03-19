@@ -1783,7 +1783,7 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@rollup/plugin-json@^4.0.2":
+"@rollup/plugin-json@4.0.2":
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-json/-/plugin-json-4.0.2.tgz#482185ee36ac7dd21c346e2dbcc22ffed0c6f2d6"
   integrity sha512-t4zJMc98BdH42mBuzjhQA7dKh0t4vMJlUka6Fz0c+iO5IVnWaEMiYBy1uBj9ruHZzXBW23IPDGL9oCzBkQ9Udg==
@@ -1961,9 +1961,9 @@ acorn-walk@^6.0.1:
   integrity sha512-7evsyfH1cLOCdAzZAd43Cic04yKydNx0cF+7tiA19p1XnLLPU4dpCQOqpjqwokFe//vS0QqfqqjCS2JkiIs0cA==
 
 acorn@^6.0.1:
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.4.0.tgz#b659d2ffbafa24baf5db1cdbb2c94a983ecd2784"
-  integrity sha512-gac8OEcQ2Li1dxIEWGZzsp2BitJxwkwcOm0zHAJLcPJaVvm58FRnk6RkuLRpU1EujipU2ZFODv2P9DLMfnV8mw==
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.4.1.tgz#531e58ba3f51b9dacb9a6646ca4debf5b14ca474"
+  integrity sha512-ZVA9k326Nwrj3Cj9jlh3wGFutC2ZornPNARZwsNYqQYgN0EsV2d53w5RN/co65Ohn4sUAUtb1rSUAOD6XN9idA==
 
 acorn@^7.1.0:
   version "7.1.0"
@@ -2105,7 +2105,7 @@ archiver-utils@^2.1.0:
     normalize-path "^3.0.0"
     readable-stream "^2.0.0"
 
-archiver@^3.1.1:
+archiver@3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/archiver/-/archiver-3.1.1.tgz#9db7819d4daf60aec10fe86b16cb9258ced66ea0"
   integrity sha512-5Hxxcig7gw5Jod/8Gq0OneVgLYET+oNHcxgWItq4TbhOzRLKNAFUb9edAftiMKXvXfCB0vbGrJdZDNq0dWMsxg==
@@ -6349,10 +6349,10 @@ nice-try@^1.0.4:
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
-nock@12.0.2:
-  version "12.0.2"
-  resolved "https://registry.yarnpkg.com/nock/-/nock-12.0.2.tgz#47617b34738e026b29d2294b4579e35b27e6a4d3"
-  integrity sha512-pTckyfP8QHvwXP/oX+zQuSIL3S/mWTd84ba4pOGZlS/FgRZyljv4C3ZyOjgMilvkydSaERML/aJEF13EBUuDTQ==
+nock@12.0.3:
+  version "12.0.3"
+  resolved "https://registry.yarnpkg.com/nock/-/nock-12.0.3.tgz#83f25076dbc4c9aa82b5cdf54c9604c7a778d1c9"
+  integrity sha512-QNb/j8kbFnKCiyqi9C5DD0jH/FubFGj5rt9NQFONXwQm3IPB0CULECg/eS3AU1KgZb/6SwUa4/DTRKhVxkGABw==
   dependencies:
     debug "^4.1.0"
     json-stringify-safe "^5.0.1"
@@ -7594,10 +7594,10 @@ rollup-pluginutils@^2.3.3, rollup-pluginutils@^2.8.1:
   dependencies:
     estree-walker "^0.6.1"
 
-rollup@2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.0.4.tgz#23e7b20b4d653ad14db783630b4e44b69c1a0d97"
-  integrity sha512-Z/VZtyIVRBBmtyGQcRJKkwsYXHIVk9EuupprQJ7CKt8DnURQTVF6arptn5Ir/ihY0tZ166O1eTDKoi5quppXRg==
+rollup@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.1.0.tgz#552e248e397a06b9c6db878c0564ca4ee06729c9"
+  integrity sha512-gfE1455AEazVVTJoeQtcOq/U6GSxwoj4XPSWVsuWmgIxj7sBQNLDOSA82PbdMe+cP8ql8fR1jogPFe8Wg8g4SQ==
   optionalDependencies:
     fsevents "~2.1.2"
 
