@@ -21,6 +21,24 @@
   ],
   "properties": [
     {
+      "id": "paymentMethodTypes",
+      "type": "multiSelectOptionType",
+      "name": "paymentMethodTypes",
+      "required": false,
+      "helpTextResourceId": "paymentMethodsHelpText",
+      "labelResourceId": "paymentMethodsLabel",
+      "defaultValue": "generic",
+      "displayAsCheckboxes": true,
+      "public": true,
+      "options": [
+        {
+          "id": "generic",
+          "value": "generic",
+          "labelResourceId": "genericLabel"
+        }
+      ]
+    },
+    {
       "id": "merchantId",
       "type": "stringType",
       "labelResourceId": "merchantIdLabel",
