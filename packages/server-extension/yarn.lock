@@ -3,9 +3,9 @@
 
 
 "@adyen/api-library@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@adyen/api-library/-/api-library-4.0.0.tgz#cc0f3d375e3135635e3483d5e0f6aa46a0eef402"
-  integrity sha512-k+94vFTndxrJSy3KnHs2X0qub2Z6Zucj4e4Qcic6cb5mMMwHORNsD0lVGOfaRUi7a7q6jF3ehR6jg6O4NUsywQ==
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@adyen/api-library/-/api-library-4.0.1.tgz#45c5391eb9ad3e865025b3eafc09bc86cfa9076b"
+  integrity sha512-silRoFm3/anEWL1RzQiRynViB97qK/tsGYrymPsL11YH9mOduys3HZy+aemva6UlwOuO6FUGg7VoseT4I/otqg==
   dependencies:
     "@types/node" "14.0.5"
     https-proxy-agent "5.0.0"
@@ -561,12 +561,7 @@
     "@types/istanbul-lib-coverage" "*"
     "@types/istanbul-lib-report" "*"
 
-"@types/node@*":
-  version "13.13.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.5.tgz#96ec3b0afafd64a4ccea9107b75bf8489f0e5765"
-  integrity sha512-3ySmiBYJPqgjiHA7oEaIo2Rzz0HrOZ7yrNO5HWyaE5q0lQ3BppDZ3N53Miz8bw2I7gh1/zir2MGVZBvpb1zq9g==
-
-"@types/node@14.0.5":
+"@types/node@*", "@types/node@14.0.5":
   version "14.0.5"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.5.tgz#3d03acd3b3414cf67faf999aed11682ed121f22b"
   integrity sha512-90hiq6/VqtQgX8Sp0EzeIsv3r+ellbGj4URKj5j30tLlZvRUpnAe9YbYnjl3pJM93GyXU0tghHhvXHq+5rnCKA==
