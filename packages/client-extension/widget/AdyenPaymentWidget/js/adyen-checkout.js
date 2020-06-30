@@ -7,7 +7,7 @@ import createError from './utils/createError'
 import * as constants from './constants'
 import { presentToShopper, setBoletoConfig } from './components'
 
-export class ViewModel {
+class ViewModel {
     setGatewaySettings = ({
         installmentsOptionsId,
         environment,
