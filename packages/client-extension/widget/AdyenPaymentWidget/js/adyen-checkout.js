@@ -32,7 +32,7 @@ class ViewModel {
         this.setGatewaySettings(AdyenGenericGateway)
     }
 
-    setInstallments = installmentsOptions => {
+    setInstallments = (installmentsOptions) => {
         try {
             eventEmitter.store.emit(constants.installmentsOptions, JSON.parse(installmentsOptions))
         } catch (e) {
@@ -55,7 +55,7 @@ class ViewModel {
         eventEmitter.store.emit(constants.brazilEnabled, localeIsBr && curIsBr)
     }
 
-    handlePageChanged = pageData => {
+    handlePageChanged = (pageData) => {
         const isCheckout = pageData.pageId === 'checkout'
         isCheckout && eventEmitter.order.emit(constants.pageChanged, pageData)
     }
@@ -64,7 +64,7 @@ class ViewModel {
         this.reset()
     }
 
-    onLoad = widget => {
+    onLoad = (widget) => {
         store.init(widget)
         Object.assign(this, widget, { store })
 
@@ -99,7 +99,7 @@ class ViewModel {
             NOTIFICATION_ADD,
         } = pubsub.topicNames
 
-        const emitInitialOrder = ev => {
+        const emitInitialOrder = (ev) => {
             eventEmitter.order.emit(constants.initialOrderCreated, ev)
         }
         $.Topic(ORDER_CREATED_INITIAL).subscribe(emitInitialOrder)
