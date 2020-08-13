@@ -2,6 +2,7 @@ import $ from 'jquery'
 import * as constants from '../constants'
 import { eventEmitter } from '../utils'
 import { createBoletoCheckout, createCardCheckout, createStoredCards, createLocalPaymentCheckout, store } from './index'
+import './static/bundle'
 
 class Component {
     constructor() {
@@ -32,16 +33,17 @@ class Component {
         eventEmitter.store.emit(constants.comboCardOptions, isDebitCard ? options : {})
     }
 
-    getOriginKeysSuccessResponse = originKeysRes => {
+    getOriginKeysSuccessResponse = (originKeysRes) => {
+        const originDomain = store.get(constants.originDomain)
         const { origin } = window.location
         const cart = store.get(constants.cart)
         const user = store.get(constants.user)
         const { amount, currencyCode } = cart()
 
-        eventEmitter.store.emit(constants.originKey, originKeysRes.originKeys[origin])
+        eventEmitter.store.emit(constants.originKey, originKeysRes.originKeys[originDomain || origin])
         store.get(constants.ajax)('paymentMethods', this.getPaymentMethods, {
             method: 'post',
-            body: { amount: { currency: currencyCode(), value: amount() }, shopperReference: user().id() },
+            body: { amount: { currency: currencyCode(), value: amount() * 100 }, shopperReference: user().id() },
         })
     }
 
@@ -54,20 +56,14 @@ class Component {
         store.get(constants.ajax)('originKeys', this.getOriginKeysSuccessResponse)
     }
 
-    importAdyenCheckout = paymentMethodsResponse => {
-        const environment = store.get(constants.environment)
-        const url = constants.adyenCheckoutComponentUrl(environment)
-
-        import(url).then(module => {
-            window.AdyenCheckout = module.default
-            createCardCheckout(paymentMethodsResponse)
-            createStoredCards()
-            createLocalPaymentCheckout(paymentMethodsResponse)
-            createBoletoCheckout(paymentMethodsResponse)
-        })
+    importAdyenCheckout = (paymentMethodsResponse) => {
+        createCardCheckout(paymentMethodsResponse)
+        createStoredCards()
+        createLocalPaymentCheckout(paymentMethodsResponse)
+        createBoletoCheckout(paymentMethodsResponse)
     }
 
-    getPaymentMethods = paymentMethodsResponse => {
+    getPaymentMethods = (paymentMethodsResponse) => {
         eventEmitter.store.emit(constants.paymentMethodsResponse, paymentMethodsResponse)
         this.importAdyenCheckout(paymentMethodsResponse)
     }

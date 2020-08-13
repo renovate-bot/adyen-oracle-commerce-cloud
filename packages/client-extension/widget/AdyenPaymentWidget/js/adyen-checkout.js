@@ -11,16 +11,23 @@ class ViewModel {
     store = store
 
     setGatewaySettings = ({
+        installmentsEnabled,
         installmentsOptionsId,
+        countryCode,
         environment,
         storedPayment,
         boletoDeliveryDate,
         boletoShopperStatement,
+        originDomain,
+        holderNameEnabled,
     }) => {
         eventEmitter.store.emit(constants.environment, environment)
 
-        store.get(constants.isAllowedCountryForInstallments) && this.setInstallments(installmentsOptionsId)
+        installmentsEnabled && this.setInstallments(installmentsOptionsId)
         eventEmitter.store.emit(constants.storedPaymentType, storedPayment)
+        eventEmitter.store.emit(constants.originDomain, originDomain)
+        eventEmitter.store.emit(constants.holderNameEnabled, holderNameEnabled)
+        eventEmitter.store.emit(constants.countryCode, countryCode)
 
         setBoletoConfig({ boletoDeliveryDate: Number(boletoDeliveryDate), boletoShopperStatement })
     }
@@ -45,14 +52,12 @@ class ViewModel {
 
     setSiteCountryAndCurrency = () => {
         const { brazil } = constants.countries
-        const { currency, locale } = brazil
+        const { currency } = brazil
 
-        const siteLocale = store.get(constants.locale).toLowerCase()
-        const currencyCode = this.cart().currencyCode()
-        const localeIsBr = locale === siteLocale
+        const currencyCode = this.cart().currencyCode().toLowerCase()
         const curIsBr = currencyCode.toLowerCase() === currency
 
-        eventEmitter.store.emit(constants.brazilEnabled, localeIsBr && curIsBr)
+        eventEmitter.store.emit(constants.brazilEnabled, curIsBr)
     }
 
     handlePageChanged = (pageData) => {
@@ -65,6 +70,7 @@ class ViewModel {
     }
 
     onLoad = (widget) => {
+        Object.assign(this, widget)
         store.init(widget)
         Object.assign(this, widget, { store })
 
