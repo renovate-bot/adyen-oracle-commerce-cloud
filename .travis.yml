@@ -5,7 +5,7 @@ node_js:
   - lts/*
 cache: yarn
 script:
-  - yarn run test
+    - yarn run test
 jobs:
   include:
     - stage: Produce Coverage

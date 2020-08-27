@@ -12,5 +12,8 @@
     "jest": "25.5.4",
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-node-resolve": "5.2.0"
+  },
+  "dependencies": {
+    "@adyen/adyen-web": "3.12.1"
   }
 }

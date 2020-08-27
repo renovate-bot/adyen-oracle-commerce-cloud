@@ -1,7 +1,6 @@
 import express from 'express'
 import payments from './payments/index'
 import paymentMethods from './paymentMethods/index'
-import originKeys from './originKeys/index'
 import errorMiddleware from '../middlewares/errorHandler'
 import validateWebhookMiddleware from '../middlewares/validateWebhook'
 import loggerMiddleware from '../middlewares/logger'
@@ -19,7 +18,6 @@ router.use(uaParser)
 router.use(occClient, createClient)
 
 router.use('/v1/paymentMethods', cache(oneDay), paymentMethods)
-router.use('/v1/originKeys', cache(oneDay), originKeys)
 router.use('/v1/clearCache', clearCache)
 router.use('/v1/payments', validateWebhookMiddleware, payments)
 

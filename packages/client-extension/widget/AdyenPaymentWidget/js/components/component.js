@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import * as constants from '../constants'
 import { eventEmitter } from '../utils'
 import { createBoletoCheckout, createCardCheckout, createStoredCards, createLocalPaymentCheckout, store } from './index'
@@ -33,27 +32,15 @@ class Component {
         eventEmitter.store.emit(constants.comboCardOptions, isDebitCard ? options : {})
     }
 
-    getOriginKeysSuccessResponse = (originKeysRes) => {
-        const originDomain = store.get(constants.originDomain)
-        const { origin } = window.location
+    render = () => {
         const cart = store.get(constants.cart)
         const user = store.get(constants.user)
         const { amount, currencyCode } = cart()
 
-        eventEmitter.store.emit(constants.originKey, originKeysRes.originKeys[originDomain || origin])
         store.get(constants.ajax)('paymentMethods', this.getPaymentMethods, {
             method: 'post',
             body: { amount: { currency: currencyCode(), value: amount() * 100 }, shopperReference: user().id() },
         })
-    }
-
-    render = () => {
-        const environment = store.get(constants.environment)
-        const href = constants.adyenCssUrl(environment)
-        const cssLink = `<link rel="stylesheet" href="${href}" />`
-        $('head').append(cssLink)
-
-        store.get(constants.ajax)('originKeys', this.getOriginKeysSuccessResponse)
     }
 
     importAdyenCheckout = (paymentMethodsResponse) => {

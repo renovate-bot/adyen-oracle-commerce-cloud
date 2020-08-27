@@ -10,7 +10,6 @@ import { store, Component } from '../components'
 import { eventEmitter } from '../utils'
 
 jest.mock('../components/boleto', () => {
-    require.requireActual('../components/store').default
     return {
         __esModule: true,
         default: jest.fn(),
@@ -33,10 +32,8 @@ describe('Component', () => {
         widget = new Widget()
     })
 
-    it('should fetch origin key, payment methods and adyen checkout script', async done => {
+    it('should fetch payment methods', async (done) => {
         const scope = nock('http://localhost/ccstorex/custom/adyen/v1')
-            .get('/originKeys')
-            .reply(200, originKeysResponseMock)
             .post('/paymentMethods')
             .reply(200, paymentMethodsResponseMock)
 

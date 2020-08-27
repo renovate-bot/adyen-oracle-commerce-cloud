@@ -57,6 +57,15 @@
             "public": false
         },
         {
+            "id": "clientKey",
+            "type": "stringType",
+            "labelResourceId": "clientKeyLabel",
+            "helpTextResourceId": "clientKeyHelpText",
+            "defaultValue": "test_GENERATED-CLIENT-KEY",
+            "required": true,
+            "public": true
+        },
+        {
             "id": "storedPayment",
             "type": "multiSelectOptionType",
             "required": false,
@@ -134,15 +143,6 @@
             "labelResourceId": "holderNameEnabledLabel",
             "helpTextResourceId": "holderNameEnabledHelpText",
             "defaultValue": false,
-            "public": true
-        },
-        {
-            "id": "originDomain",
-            "type": "stringType",
-            "labelResourceId": "originDomainLabel",
-            "helpTextResourceId": "originDomainHelpText",
-            "defaultValue": "",
-            "required": false,
             "public": true
         },
         {

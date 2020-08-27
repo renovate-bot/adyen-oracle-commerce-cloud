@@ -12,7 +12,6 @@ export const paymentMethodTypes = {
 }
 export const adyenUrl = (env) => `https://checkoutshopper-${env.toLowerCase()}.adyen.com`
 export const adyenCssUrl = (env) => `${adyenUrl(env)}/checkoutshopper/sdk/3.4.0/adyen.css`
-export const adyenCheckoutComponentUrl = (env) => `${adyenUrl(env)}/checkoutshopper/sdk/3.4.0/adyen.js`
 
 export const locale = 'locale'
 export const countries = {
@@ -35,7 +34,6 @@ export const checkout = {
 }
 export const isLoaded = 'isLoaded'
 export const ajax = 'ajax'
-export const originKey = 'originKey'
 export const installments = 'installments'
 export const cart = 'cart'
 export const user = 'user'
@@ -68,7 +66,7 @@ export const boletoOptions = {
 }
 export const localPaymentMethods = 'localPaymentMethods'
 export const card = 'card'
-export const originDomain = 'originDomain'
+export const clientKey = 'clientKey'
 export const holderNameEnabled = 'holderNameEnabled'
 export const checkoutComponent = 'checkoutComponent'
 export const countryCode = 'countryCode'

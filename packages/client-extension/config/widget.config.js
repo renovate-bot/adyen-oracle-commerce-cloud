@@ -3,6 +3,7 @@ import babel from 'rollup-plugin-babel'
 import cleanup from 'rollup-plugin-cleanup'
 import nodeResolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
+import postcss from 'rollup-plugin-postcss'
 
 import path from 'path'
 
@@ -13,6 +14,9 @@ export default {
     input: path.join(inputPath, `${widgetFilename}.js`),
     inlineDynamicImports: true,
     plugins: [
+        postcss({
+            extensions: ['.css'],
+        }),
         babel({
             presets: [
                 [

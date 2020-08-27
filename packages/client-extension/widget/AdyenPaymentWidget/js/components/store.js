@@ -20,7 +20,6 @@ class Store {
     component = new Component()
     checkout = undefined
     checkoutComponent = undefined
-    originKey = ''
     isValid = false
     selectedBrand = undefined
     creditCard = comboCards.credit

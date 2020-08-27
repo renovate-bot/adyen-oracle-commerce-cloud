@@ -1,4 +1,6 @@
 import ccConstants from 'ccConstants'
+import AdyenCheckout from '@adyen/adyen-web'
+import '@adyen/adyen-web/dist/adyen.css'
 import { store } from '../components'
 import * as constants from '../constants'
 import { eventEmitter } from './index'
@@ -8,7 +10,7 @@ export const getDefaultConfig = () => {
     const { amount, currencyCode } = cart()
     const environment = store.get(constants.environment)
     const countryCode = store.get(constants.countryCode)
-    const originKey = store.get(constants.originKey)
+    const clientKey = store.get(constants.clientKey)
     const paymentMethodsResponse = store.get(constants.paymentMethodsResponse)
 
     return {
@@ -19,7 +21,7 @@ export const getDefaultConfig = () => {
         countryCode,
         showPayButton: true,
         environment: environment.toLowerCase(),
-        originKey,
+        clientKey,
         paymentMethodsResponse,
     }
 }
