@@ -5,7 +5,7 @@
     "scripts": {
         "test": "jest",
         "dev": "rollup --config config/config.dev.js",
-        "server": "nodemon app/bundle.js",
+        "server": "nodemon index.mjs",
         "watch": "concurrently --kill-others \"yarn run dev -- --watch\" \"yarn run server\"",
         "build": "rollup --config config/config.prod.js"
     },
@@ -43,8 +43,7 @@
         "husky": "4.3.0",
         "jest": "26.5.2",
         "nconf": "0.10.0",
-        "nodemon": "2.0.4",
-        "winston": "latest"
+        "nodemon": "2.0.4"
     },
     "description": "",
     "authenticatedUrls": [

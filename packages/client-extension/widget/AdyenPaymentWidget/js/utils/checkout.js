@@ -4,8 +4,9 @@ import '@adyen/adyen-web/dist/adyen.css'
 import { store } from '../components'
 import * as constants from '../constants'
 import { eventEmitter } from './index'
+import { hideModal, showModal } from './modal'
 
-export const getDefaultConfig = () => {
+export const getDefaultConfig = (type, additionalOptions) => {
     const cart = store.get(constants.cart)
     const { amount, currencyCode } = cart()
     const environment = store.get(constants.environment)
@@ -23,10 +24,13 @@ export const getDefaultConfig = () => {
         environment: environment.toLowerCase(),
         clientKey,
         paymentMethodsResponse,
+        ...additionalOptions,
     }
 }
 
 export const createFromAction = ({ action, selector, checkoutComponent }) => {
+    const needsModal = ['threeDS2Challenge', 'voucher']
+    needsModal.includes(action.type) ? showModal() : hideModal()
     checkoutComponent.createFromAction(action).mount(selector)
 }
 
@@ -41,8 +45,8 @@ class Checkout {
             return checkout
         }
 
-        // eslint-disable-next-line no-undef
-        const newCheckout = new AdyenCheckout(getDefaultConfig())
+        const defaultConfig = getDefaultConfig(this.type, { onAdditionalDetails: this.onAdditionalDetails })
+        const newCheckout = new AdyenCheckout(defaultConfig)
         eventEmitter.store.emit(constants.checkoutComponent, newCheckout)
         return newCheckout
     }
@@ -57,8 +61,30 @@ class Checkout {
         }
     }
 
+    onAdditionalDetails = (state /*, component */) => {
+        eventEmitter.store.emit(constants.additionalDetails, state.data)
+        this.initiateOrder()
+    }
+
     onSubmit = (onChange) => (state, component) => {
         onChange && onChange(state, component)
+        this.initiateOrder()
+    }
+
+    onChange = (options) => (state, component) => {
+        this.setPaymentDetails(component, state, options)
+    }
+
+    setPaymentDetails(component, state, options = {}) {
+        const paymentDetails = store.get(constants.paymentDetails)
+        const isValid = component.isValid && typeof state.data === 'object'
+        eventEmitter.store.emit(constants.isValid, isValid)
+
+        const payload = { ...paymentDetails, [this.type]: { ...state.data, ...options } }
+        eventEmitter.store.emit(constants.paymentDetails, payload)
+    }
+
+    initiateOrder() {
         const loader = document.querySelector(`.loader-wrapper`)
         loader && loader.classList.toggle('hide', false)
 
@@ -67,16 +93,6 @@ class Checkout {
 
         order().op(ccConstants.ORDER_OP_INITIATE)
         order().handlePlaceOrder()
-    }
-
-    onChange = (options) => (state, component) => {
-        const paymentDetails = store.get(constants.paymentDetails)
-        const isValid = component.isValid && typeof state.data === 'object'
-        eventEmitter.store.emit(constants.isValid, isValid)
-
-        const payload = { ...paymentDetails, [this.type]: { ...state.data, ...options } }
-
-        eventEmitter.store.emit(constants.paymentDetails, payload)
     }
 }
 

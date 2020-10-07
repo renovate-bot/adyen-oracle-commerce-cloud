@@ -19,27 +19,37 @@ class Order {
         eventEmitter.order.on(constants.initialOrderCreated, this.initialOrderCreated)
     }
 
-    initialOrderCreated = orderEvent => {
+    parseProperties = (properties) => {
+        const parseProperty = (acc, [key, value]) => ({ ...acc, [key]: JSON.parse(value) })
+        return Object.entries(properties).reduce(parseProperty, {})
+    }
+    initialOrderCreated = (orderEvent) => {
         const order = store.get(constants.order)
-        const { customPaymentProperties } = orderEvent.order.payments[0]
-        const { data, resultCode } = customPaymentProperties
+        const { customPaymentProperties } = this.getCustomProperties(orderEvent.order)
 
-        const payload = { order: getOrderPayload(order), customPaymentProperties: JSON.parse(data), resultCode }
+        const payload = {
+            order: getOrderPayload(order),
+            customPaymentProperties: this.parseProperties(customPaymentProperties),
+            resultCode: customPaymentProperties.resultCode,
+        }
 
         eventEmitter.store.emit(constants.orderPayload, payload)
         const isDone = store.get(constants.isDone)
         !isDone() && redirectAuth(payload, this.createOrder)
     }
 
-    getAndCreatOrder = result => {
-        result.paymentData = this.instance.getItem(constants.storage.paymentData)
+    getAndCreateOrder = (details) => {
+        const paymentData = this.instance.getItem(constants.storage.paymentData)
 
-        const payment = { type: 'generic', customProperties: result }
+        const payment = {
+            type: 'generic',
+            customProperties: { details, paymentData },
+        }
 
         this.recreateOrder(payment)
     }
 
-    createOrder = orderPayload => {
+    createOrder = (orderPayload) => {
         const orderFail = ({ message = 'Failed to create order' } = {}) => {
             $.Topic(pubsub.topicNames.ORDER_SUBMISSION_FAIL).publish({ message: 'fail', errorMessage: message })
         }
@@ -51,13 +61,13 @@ class Order {
             $.Topic(pubsub.topicNames.ORDER_SUBMISSION_SUCCESS).publish([publishData])
         }
 
-        const submitOrder = data => {
+        const submitOrder = (data) => {
             const orderIsCompleted = orderPayload.op === 'complete'
             const completedPayload = { ...orderPayload, op: 'complete' }
             return orderIsCompleted ? completeOrder(data) : this.createOrder(completedPayload)
         }
 
-        const orderSuccess = data => {
+        const orderSuccess = (data) => {
             const { paymentState, message } = data.payments[0]
             const { PAYMENT_GROUP_STATE_AUTHORIZED, PAYMENT_GROUP_STATE_INITIAL } = ccConstants
             const validPaymentGroups = [PAYMENT_GROUP_STATE_AUTHORIZED, PAYMENT_GROUP_STATE_INITIAL]
@@ -68,24 +78,26 @@ class Order {
         ccRestClient.request(ccConstants.ENDPOINT_ORDERS_CREATE_ORDER, orderPayload, orderSuccess, orderFail)
     }
 
-    recreateOrder = paymentData => {
+    recreateOrder = (paymentData) => {
         const storedOrder = JSON.parse(this.instance.getItem(constants.storage.order))
         storedOrder.payments = [paymentData]
-
         this.createOrder(storedOrder)
     }
 
-    getResult = urlParameters => {
+    getResult = (urlParameters) => {
+        const details = JSON.parse(this.instance.getItem(constants.storage.details) || '[]')
+
         const params = urlParameters.split('&')
         const formatResult = (acc, param) => {
             const [key, value] = param.split('=')
-            return { ...acc, [key]: decodeURIComponent(value) }
+            const useParam = Array.isArray(details) ? details.some(({ key: detailKey }) => detailKey === key) : true
+            return useParam ? { ...acc, [key]: decodeURIComponent(value) } : acc
         }
 
         return params.reduce(formatResult, {})
     }
 
-    getUrlParametersAndCreateOrder = pageData => {
+    getUrlParametersAndCreateOrder = (pageData) => {
         const order = store.get(constants.order)
         const { parameters } = pageData
 
@@ -99,19 +111,23 @@ class Order {
         }
     }
 
-    cleanPaymentGatewayType = order => {
+    cleanPaymentGatewayType = (order) => {
         if (order().paymentGateway()) {
             order().paymentGateway().type = ''
         }
     }
 
+    getCustomProperties(data) {
+        return data.payments[0]
+    }
+
     setAction(parametersObj) {
         this.isAction = this.hasParameters(parametersObj)
-        this.isAction && this.getAndCreatOrder(parametersObj)
+        this.isAction && this.getAndCreateOrder(parametersObj)
     }
-    checkIf3ds = parametersObj => 'PaRes' in parametersObj && 'MD' in parametersObj
-    checkIfLocal = parametersObj => 'payload' in parametersObj
-    hasParameters = parametersObj => {
+    checkIf3ds = (parametersObj) => 'PaRes' in parametersObj && 'MD' in parametersObj
+    checkIfLocal = (parametersObj) => 'payload' in parametersObj
+    hasParameters = (parametersObj) => {
         const is3DS = this.checkIf3ds(parametersObj)
         const isLocal = this.checkIfLocal(parametersObj)
         const hasDetails = is3DS || isLocal

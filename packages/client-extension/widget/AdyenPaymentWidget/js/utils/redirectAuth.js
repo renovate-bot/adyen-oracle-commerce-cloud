@@ -2,23 +2,36 @@ import storageApi from 'storageApi'
 import * as constants from '../constants'
 import { store } from '../components'
 import { createFromAction } from './index'
+import { createModal } from './modal'
 
 export default ({ order, customPaymentProperties }, cb) => {
     const checkoutCard = store.get(constants.checkout.card)
-    const isAuthRedirect = 'paymentData' in customPaymentProperties
-    const redirect = () => {
-        const action = {
-            action: customPaymentProperties,
-            selector: '#adyen-card-payment',
-            checkoutComponent: checkoutCard,
+
+    createModal()
+    const executeAction = createAction(customPaymentProperties, checkoutCard, order)
+
+    customPaymentProperties.action ? executeAction(customPaymentProperties.action, cb) : cb(order)
+}
+
+function createAction(customPaymentProperties, checkoutComponent, order) {
+    return (action, cb) => {
+        const options = {
+            action,
+            selector: '#present-shopper',
+            checkoutComponent,
         }
 
         const instance = storageApi.getInstance()
-        instance.setItem(constants.storage.paymentData, customPaymentProperties.paymentData)
+        if (Array.isArray(customPaymentProperties.details)) {
+            instance.setItem(constants.storage.details, JSON.stringify(customPaymentProperties.details))
+        }
+        instance.setItem(constants.storage.paymentData, customPaymentProperties.action.paymentData)
         instance.setItem(constants.storage.order, JSON.stringify(order))
 
-        createFromAction(action)
-    }
+        createFromAction(options)
 
-    isAuthRedirect ? redirect() : cb(order)
+        if (customPaymentProperties.resultCode === 'PresentToShopper') {
+            cb(order)
+        }
+    }
 }

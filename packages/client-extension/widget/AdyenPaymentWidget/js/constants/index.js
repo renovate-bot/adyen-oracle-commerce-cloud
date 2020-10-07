@@ -21,7 +21,7 @@ export const countries = {
 export const brazilEnabled = 'brazilEnabled'
 export const comboCards = { debit: 'debitCard', credit: 'creditCard' }
 export const bins = { electron: 'electron', maestro: 'maestro', elodebit: 'elodebit' }
-export const storage = { paymentData: 'AdyenPaymentData', order: 'AdyenOrder' }
+export const storage = { paymentData: 'AdyenPaymentData', order: 'AdyenOrder', details: 'AdyenDetails' }
 export const noInstallmentsMsg = 'noInstallmentsMsg'
 
 export const render = 'render'
@@ -70,3 +70,4 @@ export const clientKey = 'clientKey'
 export const holderNameEnabled = 'holderNameEnabled'
 export const checkoutComponent = 'checkoutComponent'
 export const countryCode = 'countryCode'
+export const additionalDetails = 'additionalDetails'

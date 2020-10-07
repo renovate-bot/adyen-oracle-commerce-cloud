@@ -36,7 +36,7 @@ describe('Order', () => {
             .reply(400, 'Failed to create order')
 
         const data = '{ "foo": "bar" }'
-        const resultCode = 'Authorised'
+        const resultCode = '"Authorised"'
         const customPayments = [
             { customPaymentProperties: { data, resultCode } },
         ]
@@ -60,7 +60,7 @@ describe('Order', () => {
             .reply(200, { payments, id: 'mocked_id', uuid: 'mocked_uuid' })
 
         const data = '{ "foo": "bar" }'
-        const resultCode = 'Refused'
+        const resultCode = '"Refused"'
         const customPayments = [
             { customPaymentProperties: { data, resultCode } },
         ]
@@ -80,9 +80,9 @@ describe('Order', () => {
         viewModel.onLoad(widget)
 
         eventEmitter.store.emit(constants.checkout.card, checkoutComponent)
-        const data = '{ "paymentData": "mocked_payment_data" }'
-        const resultCode = 'ChallengeShopper'
-        const customPaymentProperties = { data, resultCode }
+        const data = { action: '{ "paymentData": "mocked_payment_data" }' }
+        const resultCode = '"ChallengeShopper"'
+        const customPaymentProperties = { resultCode, ...data }
         const customPayments = [{ customPaymentProperties }]
         const mockedOrderEvent = { order: { payments: customPayments } }
         order.initialOrderCreated(mockedOrderEvent)
@@ -91,7 +91,7 @@ describe('Order', () => {
         const payload = {
             action,
             checkoutComponent,
-            selector: '#adyen-card-payment',
+            selector: '#present-shopper',
         }
         expect(createFromAction).toHaveBeenNthCalledWith(1, payload)
         expect(order.createOrder).toHaveBeenCalledTimes(0)
@@ -109,7 +109,7 @@ describe('Order', () => {
             .reply(200, { payments, id: 'mocked_id', uuid: 'mocked_uuid' })
 
         const data = '{ "foo": "bar" }'
-        const resultCode = 'Authorised'
+        const resultCode = '"Authorised"'
         const customPayments = [
             { customPaymentProperties: { data, resultCode } },
         ]
@@ -141,9 +141,11 @@ describe('Order', () => {
         const payments = [
             {
                 customProperties: {
-                    MD: '"mocked_md"',
-                    PaRes: '"mocked_pares"',
-                    paymentData: '{ "AdyenPaymentData": "mocked_value" }',
+                    details: {
+                        MD: '"mocked_md"',
+                        PaRes: '"mocked_pares"',
+                    },
+                    paymentData: "{ \"AdyenPaymentData\": \"mocked_value\" }",
                 },
                 type: 'generic',
             },
