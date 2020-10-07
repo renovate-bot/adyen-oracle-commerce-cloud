@@ -18,8 +18,8 @@ printf "\n✅️  Done!\n"
 node -p "JSON.stringify({
   extensionID: '${EXTENSION_ID}',
   createdBy: 'Adyen NV',
-  version: 1,
+  version: 2,
   timeCreated: '2020-07-07',
   name: '${EXTENSION_NAME}',
-  description: 'Adyen OCX Payment Plugin (v1.0.3)'
+  description: 'Adyen OCX Payment Plugin (v2.0.0)'
 })" > "${ext}"
